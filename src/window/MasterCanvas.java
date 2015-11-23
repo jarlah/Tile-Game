@@ -68,7 +68,7 @@ public enum MasterCanvas {
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.BLACK);
+        g.setColor(new Color(158,172,255));
         g.fillRect(0, 0, WIDTH, HEIGHT);
         screenHandler.render(g);
         g.dispose();

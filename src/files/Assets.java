@@ -16,5 +16,6 @@ public enum Assets {
 
     private void loadCroppedImages() {
         defaultSheet.loadCropped("grass", 16, 144, 16, 16);
+        defaultSheet.loadCropped("tree", 240, 0, 16, 16);
     }
 }
