@@ -22,7 +22,7 @@ public class Level {
 
         for (int x = 0; x < lengthX; x++) {
             for (int y = 0; y < lengthY; y++) {
-                if (r.nextFloat() > 0.2f){
+                if (r.nextFloat() < 0.2f){
                     tiles[x][y] = new Tile(new TileInfo("grass", x * size, y * size, size), new Tile(new TileInfo("tree", x * size, y * size, size)));
                 } else {
                     tiles[x][y] = new Tile(new TileInfo("grass", x * size, y * size, size));
