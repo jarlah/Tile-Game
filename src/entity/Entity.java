@@ -1,14 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
-/**
- *
- * @author jarlandre
- */
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
 public abstract class Entity {
+    public abstract void render(Graphics g);
+    public abstract void tick(long delta);
+    protected final Rectangle boundArea;
+    protected final int x,y,width,height;
     
+    public Entity(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        boundArea = new Rectangle(x,y,width,height);
+    }
 }

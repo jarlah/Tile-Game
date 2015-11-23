@@ -2,19 +2,19 @@ package files;
 
 import gfx.SpriteSheet;
 
-public final class Assets {
-    public static SpriteSheet defaultSheet = new SpriteSheet("SpriteSheets/terrain.png");
+public enum Assets {
+    Singleton;
     
-    private static boolean loaded = false;
+    public SpriteSheet defaultSheet = new SpriteSheet("SpriteSheets/terrain.png");
+    private boolean loaded = false;
+    public boolean isLoaded() { return loaded; }
     
-    public static boolean isLoaded() { return loaded; }
-    
-    public static void loadAll() {
+    public void loadAll() {
         loadCroppedImages();
         loaded = true;
     }
 
-    private static void loadCroppedImages() {
-        defaultSheet.loadCropped("test", 16, 144, 16, 16);
+    private void loadCroppedImages() {
+        defaultSheet.loadCropped("grass", 16, 144, 16, 16);
     }
 }

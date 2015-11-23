@@ -1,6 +1,7 @@
 package window;
 
 import files.Assets;
+import game.Game;
 import input.HomeKeyListener;
 import input.HomeMouseListener;
 import java.awt.Canvas;
@@ -11,17 +12,23 @@ import java.awt.image.BufferStrategy;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import screen.ScreenHandler;
+import camera.Camera;
 
-public class MasterCanvas {
-
-    private static final int WIDTH = 800, HEIGHT = 600;
+public enum MasterCanvas {
+    Singleton;
+    
+    public static final int WIDTH = 800, HEIGHT = 600;
     private final Canvas canvas;
     private final GameLoop loop;
     private final Dimension defaultSize;
     private final ScreenHandler screenHandler;
-    
-    public MasterCanvas() {
+    private int loopTicks = 0;
+    private int loopFrames = 0;
+    private double loopDelta;
+
+    private MasterCanvas() {
         screenHandler = new ScreenHandler();
+        screenHandler.setActiveScreen(new Game());
         defaultSize = new Dimension(WIDTH, HEIGHT);
         canvas = new Canvas();
         canvas.setMinimumSize(defaultSize);
@@ -36,16 +43,21 @@ public class MasterCanvas {
         canvas.setFocusable(true);
         loop = new GameLoop();
     }
-    
-    public void startLoop() { loop.start(); }
-    
-    public void stopLoop() { loop.stop(); }
+
+    public void startLoop() {
+        loop.start();
+    }
+
+    public void stopLoop() {
+        loop.stop();
+    }
 
     public Canvas getCanvas() {
         return canvas;
     }
 
     private void tick(double delta) {
+        Camera.Singleton.updatePosition();
         screenHandler.tick(delta);
     }
 
@@ -59,18 +71,15 @@ public class MasterCanvas {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         screenHandler.render(g);
-        g.drawImage(Assets.defaultSheet.getCropped("test"), 50, 50, 100, 100, null);
         g.dispose();
         bs.show();
     }
 
     class GameLoop implements Runnable {
+
         private final Thread gameThread = new Thread(this);
         private boolean running = false;
         private static final int FPSCAP = 120;
-        private int loopTicks = 0;
-        private int loopFrames = 0;
-        private double loopDelta;
 
         @Override
         public void run() {
@@ -108,8 +117,8 @@ public class MasterCanvas {
         public final synchronized void start() {
             if (!running) {
                 running = true;
-                if (!Assets.isLoaded()) {
-                    Assets.loadAll();
+                if (!Assets.Singleton.isLoaded()) {
+                    Assets.Singleton.loadAll();
                 }
                 gameThread.start();
             }
@@ -125,17 +134,17 @@ public class MasterCanvas {
                 }
             }
         }
+    }
 
-        public int getTicks() {
-            return loopTicks;
-        }
+    public int getTicks() {
+        return loopTicks;
+    }
 
-        public int geFrames() {
-            return loopFrames;
-        }
+    public int geFrames() {
+        return loopFrames;
+    }
 
-        public double getDelta() {
-            return loopDelta;
-        }
+    public double getDelta() {
+        return loopDelta;
     }
 }
