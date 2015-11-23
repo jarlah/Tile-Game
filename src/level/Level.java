@@ -1,37 +1,71 @@
 package level;
 
-import entity.tiles.Tile;
+import entity.tiles.MasterTile;
 import java.awt.Graphics;
 import window.MasterCanvas;
 import camera.Camera;
+import entity.tiles.Grass;
 import entity.tiles.TileInfo;
+import entity.tiles.Tree;
 import java.util.Random;
 
 public class Level {
 
-    private final Tile[][] tiles;
+    private final MasterTile[][] tiles;
     private final int size = 50;
     private final int lengthX, lengthY;
-    private final int scale = 2;
+    private final int scale = 3;
     private final Random r = new Random();
-    
+
     public Level() {
         lengthX = (MasterCanvas.WIDTH / size) * scale;
         lengthY = (MasterCanvas.HEIGHT / size) * scale;
-        tiles = new Tile[lengthX][lengthY];
+        tiles = new MasterTile[lengthX][lengthY];
 
         for (int x = 0; x < lengthX; x++) {
             for (int y = 0; y < lengthY; y++) {
-                if (r.nextFloat() < 0.2f){
-                    tiles[x][y] = new Tile(new TileInfo("grass", x * size, y * size, size), new Tile(new TileInfo("tree", x * size, y * size, size)));
+                TileInfo tileInfo = new TileInfo(x * size, y * size, size);
+                if (r.nextFloat() < 0.2f) {
+                    tiles[x][y] = new MasterTile(new Grass(), new Tree(), tileInfo);
                 } else {
-                    tiles[x][y] = new Tile(new TileInfo("grass", x * size, y * size, size));
+                    tiles[x][y] = new MasterTile(new Grass(), null, tileInfo);
                 }
             }
         }
     }
 
     public void render(Graphics g) {
+        CameraView cameraInfo = getCameraView();
+        for (int x = cameraInfo.cameraX; x < cameraInfo.cameraWidth + cameraInfo.cameraX; x++) {
+            for (int y = cameraInfo.cameraY; y < cameraInfo.cameraHeight + cameraInfo.cameraY; y++) {
+                tiles[x][y].render(g);
+            }
+        }
+    }
+
+    public void tick(double delta) {
+        CameraView cameraInfo = getCameraView();
+        for (int x = cameraInfo.cameraX; x < cameraInfo.cameraWidth + cameraInfo.cameraX; x++) {
+            for (int y = cameraInfo.cameraY; y < cameraInfo.cameraHeight + cameraInfo.cameraY; y++) {
+                tiles[x][y].tick(delta);
+            }
+        }
+    }
+
+    private class CameraView {
+
+        private final int cameraX, cameraY, cameraWidth, cameraHeight;
+
+        CameraView(int x, int y, int cw, int ch) {
+            this.cameraX = x;
+            this.cameraY = y;
+            this.cameraWidth = cw;
+            this.cameraHeight = ch;
+        }
+
+    }
+
+    private CameraView getCameraView() {
         int cameraX = Camera.Singleton.getX() / size;
         int cameraY = Camera.Singleton.getY() / size;
 
@@ -52,14 +86,6 @@ public class Level {
             cameraY = lengthY - cameraHeight;
         }
 
-        for (int x = cameraX; x < cameraWidth + cameraX; x++) {
-            for (int y = cameraY; y < cameraHeight + cameraY; y++) {
-                tiles[x][y].render(g);
-            }
-        }
-    }
-
-    public void tick(double delta) {
-        // TODO or not TODO
+        return new CameraView(cameraX, cameraY, cameraWidth, cameraHeight);
     }
 }

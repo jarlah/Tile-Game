@@ -1,35 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package entity.tiles;
 
-import entity.Entity;
 import files.Assets;
 import java.awt.Graphics;
-import camera.Camera;
+import lombok.AllArgsConstructor;
 
-public class Tile extends Entity {
-    private final TileInfo tileInfo;
-    private final Tile top;
-    
-    public Tile(TileInfo tileInfo) {
-        this.tileInfo = tileInfo;
-        this.top = null;
-    }
-    
-    public Tile(TileInfo tileInfo, Tile top) {
-        this.tileInfo = tileInfo;
-        this.top = top;
+@AllArgsConstructor
+public class Tile {
+    private String name;
+
+    public void render(Graphics g, int x, int y, int size) {
+        g.drawImage(Assets.Singleton.defaultSheet.getImage(name), x, y, size, size, null);
     }
 
-    @Override
-    public void render(Graphics g) {
-        g.drawImage(Assets.Singleton.defaultSheet.getImage(tileInfo.getName()), tileInfo.getX()-Camera.Singleton.getX(), tileInfo.getY()-Camera.Singleton.getY(), tileInfo.getSize(), tileInfo.getSize(), null);
-        if (top != null) {
-            g.drawImage(Assets.Singleton.defaultSheet.getImage(top.tileInfo.getName()), top.tileInfo.getX()-Camera.Singleton.getX(), top.tileInfo.getY()-Camera.Singleton.getY(), top.tileInfo.getSize(), top.tileInfo.getSize(), null);
-        }
+    public void tick(double delta) {
+        
     }
-
-    @Override
-    public void tick(long delta) {
-        // nothing atm
-    }
-    
 }

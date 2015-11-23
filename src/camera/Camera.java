@@ -1,5 +1,6 @@
 package camera;
 
+import entity.Entity;
 import java.awt.event.KeyEvent;
 import window.MasterCanvas;
 
@@ -48,6 +49,11 @@ public enum Camera {
     public void updatePosition() {
         y += MasterCanvas.Singleton.getDelta() * speedY;
         x += MasterCanvas.Singleton.getDelta() * speedX;
+    }
+    
+    public void setPosition(Entity e) {
+        x = (MasterCanvas.WIDTH/2) - (e.getX()+(e.getWidth()/2));
+        y = (MasterCanvas.HEIGHT/2) - (e.getY()+(e.getHeight()/2));
     }
 
     public int getX() {

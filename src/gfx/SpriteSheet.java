@@ -13,13 +13,16 @@ public class SpriteSheet {
     public SpriteSheet(String link) {
         try {
             image = ImageIO.read(SpriteSheet.class.getClassLoader().getResourceAsStream(link));
+            System.out.println(image);
         } catch (IOException ex) {
             throw new RuntimeException("Could not load resource " + link, ex);
         }
     }
     
     public void loadCropped(String name, int x, int y, int pixelWidth, int pixelHeight) {
-        images.put(name, image.getSubimage(x, y, pixelWidth, pixelHeight));
+        BufferedImage subImage = image.getSubimage(x, y, pixelWidth, pixelHeight);
+        System.out.println(subImage);
+        images.put(name, subImage);
     }
     
     public BufferedImage getImage(String name) {

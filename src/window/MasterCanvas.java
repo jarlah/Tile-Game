@@ -16,7 +16,7 @@ import camera.Camera;
 
 public enum MasterCanvas {
     Singleton;
-    
+
     public static final int WIDTH = 800, HEIGHT = 600;
     private final Canvas canvas;
     private final GameLoop loop;
@@ -27,6 +27,9 @@ public enum MasterCanvas {
     private double loopDelta;
 
     private MasterCanvas() {
+        if (!Assets.Singleton.isLoaded()) {
+            Assets.Singleton.loadAll();
+        }
         screenHandler = new ScreenHandler();
         screenHandler.setActiveScreen(new Game());
         defaultSize = new Dimension(WIDTH, HEIGHT);
@@ -57,7 +60,6 @@ public enum MasterCanvas {
     }
 
     private void tick(double delta) {
-        Camera.Singleton.updatePosition();
         screenHandler.tick(delta);
     }
 
@@ -68,7 +70,7 @@ public enum MasterCanvas {
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        g.setColor(new Color(158,172,255));
+        g.setColor(new Color(158, 172, 255));
         g.fillRect(0, 0, WIDTH, HEIGHT);
         screenHandler.render(g);
         g.dispose();
@@ -117,9 +119,6 @@ public enum MasterCanvas {
         public final synchronized void start() {
             if (!running) {
                 running = true;
-                if (!Assets.Singleton.isLoaded()) {
-                    Assets.Singleton.loadAll();
-                }
                 gameThread.start();
             }
         }
@@ -140,7 +139,7 @@ public enum MasterCanvas {
         return loopTicks;
     }
 
-    public int geFrames() {
+    public int getFrames() {
         return loopFrames;
     }
 
