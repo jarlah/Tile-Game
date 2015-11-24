@@ -2,11 +2,10 @@ package gfx;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
-import lombok.Getter;
 
 public class Texture {
-    @Getter
     private final BufferedImage image;
     
     public Texture(String link) {
@@ -16,4 +15,8 @@ public class Texture {
             throw new RuntimeException("Could not load texture " + link, ex);
         }
     }
+
+	public BufferedImage getImage() {
+		return image;
+	}
 }

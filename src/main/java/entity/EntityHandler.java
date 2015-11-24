@@ -4,8 +4,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
-
 
 public class EntityHandler {
     public static EntityHandler get() { 
@@ -18,7 +16,6 @@ public class EntityHandler {
     
     private EntityHandler() {}
 
-    @Getter
     private final List<Entity> entities = new ArrayList<>();
 
     public void addEntity(Entity e) {
@@ -40,4 +37,8 @@ public class EntityHandler {
     public void tick(double delta) {
         entities.stream().forEach((e) -> e.tick(delta));
     }
+
+	public List<Entity> getEntities() {
+		return entities;
+	}
 }

@@ -2,10 +2,9 @@ package entity;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import lombok.Getter;
+
 import maths.Vector2f;
 
-@Getter
 public abstract class Entity {
     float x, y;
     private final float width, height;
