@@ -17,12 +17,12 @@ public class Player extends Entity{
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(image, (int)(getX()+Camera.O.getX()), (int)(getY()+Camera.O.getY()), (int)getWidth(), (int)getHeight(), null);
+        g.drawImage(image, (int)(getX()+Camera.C.getX()), (int)(getY()+Camera.C.getY()), (int)getWidth(), (int)getHeight(), null);
     }
 
     @Override
     public void tick(double delta) { 
-        camera.Camera.O.setPosition(this);
+        camera.Camera.C.setPosition(this);
         updatePosition(delta);
     }
     

@@ -12,10 +12,10 @@ public class MasterTile {
 
     public void render(Graphics g) {
         if (bottom != null) {
-            bottom.render(g, tileInfo.getX() - Camera.O.getX(), tileInfo.getY() - Camera.O.getY(), tileInfo.getSize());
+            bottom.render(g, tileInfo.getX() - Camera.C.getX(), tileInfo.getY() - Camera.C.getY(), tileInfo.getSize());
         }
         if (top != null) {
-            top.render(g, tileInfo.getX() - Camera.O.getX(), tileInfo.getY() - Camera.O.getY(), tileInfo.getSize());
+            top.render(g, tileInfo.getX() - Camera.C.getX(), tileInfo.getY() - Camera.C.getY(), tileInfo.getSize());
         }
     }
 

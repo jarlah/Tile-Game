@@ -3,7 +3,7 @@ package files;
 import gfx.SpriteSheet;
 
 public enum Assets {
-    O;
+    A;
     
     public SpriteSheet defaultSheet = new SpriteSheet("SpriteSheets/terrain.png");
     

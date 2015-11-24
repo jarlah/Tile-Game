@@ -15,14 +15,14 @@ public class HomeKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Camera.O.inputPressed(e);
+        Camera.C.inputPressed(e);
         Player p = (Player)EntityHandler.Singleton.getEntities().get(0);
         p.inputPressed(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        Camera.O.inputReleased(e);
+        Camera.C.inputReleased(e);
         Player p = (Player)EntityHandler.Singleton.getEntities().get(0);
         p.inputReleased(e);
     }
