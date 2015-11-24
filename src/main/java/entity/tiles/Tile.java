@@ -14,7 +14,7 @@ public class Tile {
     private String name;
 
     public void render(Graphics g, int x, int y, int size) {
-        g.drawImage(Assets.A.defaultSheet.getImage(name), x, y, size, size, null);
+        g.drawImage(Assets.O.defaultSheet.getImage(name), x, y, size, size, null);
     }
 
     public void tick(double delta) {

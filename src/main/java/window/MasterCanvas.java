@@ -26,7 +26,7 @@ public enum MasterCanvas {
     private double loopDelta;
 
     private MasterCanvas() {
-        Assets.A.loadAll();
+        Assets.O.loadAll();
         screenHandler = new ScreenHandler();
         screenHandler.setActiveScreen(new Game());
         defaultSize = new Dimension(WIDTH, HEIGHT);

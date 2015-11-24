@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import window.MasterCanvas;
 
 public enum Camera {
-    C;
+    O;
 
     private int x, y, speedX, speedY;
 
@@ -52,8 +52,8 @@ public enum Camera {
     }
     
     public void setPosition(Entity e) {
-        x = (int) e.getX() - (MasterCanvas.WIDTH/2);
-        y = (int) e.getY() - (MasterCanvas.HEIGHT/2);
+        x = (int) ((MasterCanvas.WIDTH/2) - (e.getX()+(e.getWidth()/2)));
+        y = (int) ((MasterCanvas.HEIGHT/2) - (e.getY()+(e.getHeight()/2)));
     }
 
     public int getX() {
