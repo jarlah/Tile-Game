@@ -9,12 +9,8 @@ public enum Assets {
     
     public SpriteSheet playerSheet = new SpriteSheet("Textures/Hero.png");
     
-    private boolean loaded = false;
-    public boolean isLoaded() { return loaded; }
-    
     public void loadAll() {
         loadCroppedImages();
-        loaded = true;
     }
 
     private void loadCroppedImages() {

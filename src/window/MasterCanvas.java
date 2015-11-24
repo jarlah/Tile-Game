@@ -12,7 +12,6 @@ import java.awt.image.BufferStrategy;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import screen.ScreenHandler;
-import camera.Camera;
 
 public enum MasterCanvas {
     Singleton;
@@ -27,9 +26,7 @@ public enum MasterCanvas {
     private double loopDelta;
 
     private MasterCanvas() {
-        if (!Assets.O.isLoaded()) {
-            Assets.O.loadAll();
-        }
+        Assets.O.loadAll();
         screenHandler = new ScreenHandler();
         screenHandler.setActiveScreen(new Game());
         defaultSize = new Dimension(WIDTH, HEIGHT);

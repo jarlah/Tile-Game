@@ -19,8 +19,7 @@ public class SpriteSheet {
     }
     
     public void loadCropped(String name, int x, int y, int pixelWidth, int pixelHeight) {
-        BufferedImage subImage = image.getSubimage(x, y, pixelWidth, pixelHeight);
-        images.put(name, subImage);
+        images.put(name, image.getSubimage(x, y, pixelWidth, pixelHeight));
     }
     
     public BufferedImage getImage(String name) {
