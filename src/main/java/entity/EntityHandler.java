@@ -14,9 +14,11 @@ public class EntityHandler {
         private static final EntityHandler object = new EntityHandler();
     }
     
-    private EntityHandler() {}
-
-    private final List<Entity> entities = new ArrayList<>();
+    private final List<Entity> entities;
+    
+    private EntityHandler() {
+    	entities = new ArrayList<>();
+    }
 
     public void addEntity(Entity e) {
         entities.add(e);

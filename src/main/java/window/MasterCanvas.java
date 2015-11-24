@@ -16,7 +16,7 @@ import files.Assets;
 import game.Game;
 
 public class MasterCanvas {
-    public static MasterCanvas M() { 
+    public static MasterCanvas get() { 
         return Creator.object;
     }
 
@@ -34,15 +34,14 @@ public class MasterCanvas {
 
     private MasterCanvas() {
         Assets.get().loadAll();
-        ScreenHandler.get().setActiveScreen(Game.G());
+        ScreenHandler.get().setActiveScreen(Game.get());
         defaultSize = new Dimension(WIDTH, HEIGHT);
         canvas = new Canvas();
         canvas.setMinimumSize(defaultSize);
         canvas.setMaximumSize(defaultSize);
         canvas.setPreferredSize(defaultSize);
-        HomeKeyListener keyListener = new HomeKeyListener();
+        canvas.addKeyListener(new HomeKeyListener());
         HomeMouseListener mouseListener = new HomeMouseListener();
-        canvas.addKeyListener(keyListener);
         canvas.addMouseListener(mouseListener);
         canvas.addMouseMotionListener(mouseListener);
         canvas.addMouseWheelListener(mouseListener);
@@ -80,7 +79,7 @@ public class MasterCanvas {
         bs.show();
     }
 
-    class GameLoop implements Runnable {
+    private class GameLoop implements Runnable {
 
         private final Thread gameThread = new Thread(this);
         private boolean running = false;

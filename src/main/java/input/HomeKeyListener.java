@@ -14,12 +14,12 @@ public class HomeKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Game.G().getPlayer().inputPressed(e);
+        Game.get().getPlayer().inputPressed(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        Game.G().getPlayer().inputReleased(e);
+        Game.get().getPlayer().inputReleased(e);
     }
     
 }

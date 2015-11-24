@@ -15,6 +15,10 @@ public class Texture {
             throw new RuntimeException("Could not load texture " + link, ex);
         }
     }
+    
+    public Texture(BufferedImage image) {
+    	this.image = image;
+    }
 
 	public BufferedImage getImage() {
 		return image;

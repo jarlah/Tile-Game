@@ -5,9 +5,10 @@ import javax.swing.JFrame;
 public class MasterWindow {
     private static final String TITLE = "Tile Game";
     private final JFrame frame;
-    private final MasterCanvas masterCanvas = MasterCanvas.M();
+    private final MasterCanvas masterCanvas;
 
     public MasterWindow() {
+    	masterCanvas = MasterCanvas.get();
         frame = new JFrame(TITLE);
         frame.setResizable(false);
         frame.setVisible(true);

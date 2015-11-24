@@ -25,4 +25,8 @@ public class SpriteSheet {
     public BufferedImage getImage(String name) {
         return images.get(name);
     }
+    
+    public Texture getTexture(String name) {
+    	return new Texture(getImage(name));
+    }
 }

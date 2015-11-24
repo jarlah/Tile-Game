@@ -14,6 +14,8 @@ public class Camera {
 
 	private int x, y;
 
+	private Camera() {}
+	
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;

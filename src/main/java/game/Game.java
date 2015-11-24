@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Graphics;
 
+import camera.Camera;
 import level.Level;
 import screen.Screen;
 import window.MasterCanvas;
@@ -9,7 +10,7 @@ import entity.EntityHandler;
 import entity.Player;
 
 public class Game extends Screen {
-    public static Game G() { 
+    public static Game get() { 
         return Creator.object;
     }
 
@@ -21,8 +22,8 @@ public class Game extends Screen {
     private final Player player;
 
     private Game() {
-        this.level = new Level();
-        this.player = new Player(MasterCanvas.WIDTH/2-(30/2), MasterCanvas.HEIGHT/2-(30/2));
+        this.level = Level.get();
+        this.player = new Player(MasterCanvas.WIDTH/2-(40/2), MasterCanvas.HEIGHT/2-(40/2));
     	EntityHandler.get().addEntity(player);
     }
     
@@ -34,13 +35,10 @@ public class Game extends Screen {
 
     @Override
     public void tick(double delta) {
+    	Camera.get().setPosition(player);
         level.tick(delta);
         EntityHandler.get().tick(delta);
     }
-
-	public Level getLevel() {
-		return level;
-	}
 
 	public Player getPlayer() {
 		return player;

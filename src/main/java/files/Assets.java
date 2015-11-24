@@ -11,11 +11,13 @@ public class Assets {
         private static final Assets object = new Assets();
     }
     
-    private Assets() {}
+    private final SpriteSheet defaultSheet;
+    private final SpriteSheet playerSheet;
     
-    public final SpriteSheet defaultSheet = new SpriteSheet("SpriteSheets/terrain.png");
-    
-    public final SpriteSheet playerSheet = new SpriteSheet("Textures/Hero.png");
+    private Assets() {
+    	defaultSheet = new SpriteSheet("SpriteSheets/terrain.png");
+        playerSheet = new SpriteSheet("Textures/Hero.png");
+    }
     
     public void loadAll() {
         loadCroppedImages();
@@ -26,4 +28,12 @@ public class Assets {
         defaultSheet.loadCropped("tree", 240, 0, 16, 16);
         playerSheet.loadCropped("player", 64, 0, 16, 16);
     }
+
+	public SpriteSheet getDefaultSheet() {
+		return defaultSheet;
+	}
+
+	public SpriteSheet getPlayerSheet() {
+		return playerSheet;
+	}
 }
