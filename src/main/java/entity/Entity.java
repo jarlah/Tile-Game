@@ -17,11 +17,11 @@ public abstract class Entity {
 	private Texture texture;
 	private float oldX, oldY;
 
-	public Entity(Texture texture, float x, float y, float width, float height) {
-		this(texture, x, y, width, height, new Vector2f());
+	public Entity(float x, float y, float width, float height) {
+		this(x, y, width, height, new Vector2f());
 	}
 
-	public Entity(Texture texture, float x, float y, float width, float height,
+	public Entity(float x, float y, float width, float height,
 			Vector2f velocity) {
 		this.x = x;
 		this.y = y;
@@ -30,7 +30,6 @@ public abstract class Entity {
 		this.boundArea = new Rectangle((int) x, (int) y, (int) width,
 				(int) height);
 		this.velocity = velocity;
-		this.texture = texture;
 	}
 
 	public void tick(double delta) {
@@ -157,5 +156,13 @@ public abstract class Entity {
 
 	public Rectangle getBoundArea() {
 		return boundArea;
+	}
+
+	public Texture getTexture() {
+		return texture;
+	}
+
+	public void setTexture(Texture texture) {
+		this.texture = texture;
 	}
 }

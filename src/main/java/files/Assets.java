@@ -26,7 +26,12 @@ public class Assets {
     private void loadCroppedImages() {
         defaultSheet.loadCropped("grass", 16, 144, 16, 16);
         defaultSheet.loadCropped("tree", 240, 0, 16, 16);
-        playerSheet.loadCropped("player", 64, 0, 16, 16);
+        playerSheet.loadCropped("playerLeftWalk", 48, 16, 16, 16);
+        playerSheet.loadCropped("playerRightWalk", 64, 16, 16, 16);
+        playerSheet.loadCropped("playerDownStill", 64, 0, 16, 16);
+        playerSheet.loadCropped("playerDownWalk", 80, 0, 16, 16);
+        playerSheet.loadCropped("playerUpStill", 32, 0, 16, 16);
+        playerSheet.loadCropped("playerUpWalk", 48, 0, 16, 16);
     }
 
 	public SpriteSheet getDefaultSheet() {
