@@ -4,63 +4,62 @@ import java.awt.Graphics;
 import camera.Camera;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import window.MasterCanvas;
+import maths.Vector2f;
 
 public class Player extends Entity{
 
     private final BufferedImage image;
-    private int speedX, speedY;
     
-    public Player(BufferedImage image, int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public Player(BufferedImage image, float x, float y, float width, float height, Vector2f velocity) {
+        super(x, y, width, height, velocity);
         this.image = image;
     }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(image, getX()+Camera.Singleton.getX(), getY()+Camera.Singleton.getY(), getWidth(), getHeight(), null);
+        g.drawImage(image, (int)(getX()+Camera.O.getX()), (int)(getY()+Camera.O.getY()), (int)getWidth(), (int)getHeight(), null);
     }
 
     @Override
     public void tick(double delta) { 
-        camera.Camera.Singleton.setPosition(this);
+        camera.Camera.O.setPosition(this);
         updatePosition(delta);
     }
     
     public void updatePosition(double delta) {
-        x += delta*speedX/3;
-        y += delta*speedY/3;
+        x += delta * getVelocity().getX();
+        y += delta * getVelocity().getY();
     }
     
     public void inputPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                speedX = 4;
+                getVelocity().setX(2f);
                 break;
             case KeyEvent.VK_RIGHT:
-                speedX = -3;
+                getVelocity().setX(-2f);
                 break;
             case KeyEvent.VK_UP:
-                speedY = 4;
+                getVelocity().setY(2f);
                 break;
             case KeyEvent.VK_DOWN:
-                speedY = -3;
+                getVelocity().setY(-2f);
         }
     }
 
     public void inputReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                speedX = 0;
+                getVelocity().setX(0);
                 break;
             case KeyEvent.VK_RIGHT:
-                speedX = 0;
+                getVelocity().setX(0);
                 break;
             case KeyEvent.VK_UP:
-                speedY = 0;
+                getVelocity().setY(0);
                 break;
             case KeyEvent.VK_DOWN:
-                speedY = 0;
+                getVelocity().setY(0);
         }
     }
 }

@@ -66,8 +66,8 @@ public class Level {
     }
 
     private CameraView getCameraView() {
-        int cameraX = Camera.Singleton.getX() / size;
-        int cameraY = Camera.Singleton.getY() / size;
+        int cameraX = Camera.O.getX() / size;
+        int cameraY = Camera.O.getY() / size;
 
         if (cameraX < 0) {
             cameraX = 0;

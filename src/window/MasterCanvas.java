@@ -27,8 +27,8 @@ public enum MasterCanvas {
     private double loopDelta;
 
     private MasterCanvas() {
-        if (!Assets.Singleton.isLoaded()) {
-            Assets.Singleton.loadAll();
+        if (!Assets.O.isLoaded()) {
+            Assets.O.loadAll();
         }
         screenHandler = new ScreenHandler();
         screenHandler.setActiveScreen(new Game());

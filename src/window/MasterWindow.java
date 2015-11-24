@@ -3,7 +3,7 @@ package window;
 import javax.swing.JFrame;
 
 public class MasterWindow {
-    private static final String TITLE = "Mini Tennis";
+    private static final String TITLE = "Tile Game";
     private final JFrame frame;
     private final MasterCanvas masterCanvas = MasterCanvas.Singleton;
 
