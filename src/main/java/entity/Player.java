@@ -14,19 +14,19 @@ public class Player extends GameActor {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_A:
 			getVelocity().setX(-2f);
-			setTexture(Assets.get().getPlayerSheet().getTexture("playerLeftWalk"));
+			setTexture(Assets.get().getPlayerSheet().getTexturePack("playerLeftWalk"));
 			break;
 		case KeyEvent.VK_D:
 			getVelocity().setX(2f);
-			setTexture(Assets.get().getPlayerSheet().getTexture("playerRightWalk"));
+			setTexture(Assets.get().getPlayerSheet().getTexturePack("playerRightWalk"));
 			break;
 		case KeyEvent.VK_W:
 			getVelocity().setY(-2f);
-			setTexture(Assets.get().getPlayerSheet().getTexture("playerUpWalk"));
+			setTexture(Assets.get().getPlayerSheet().getTexturePack("playerUpWalk"));
 			break;
 		case KeyEvent.VK_S:
 			getVelocity().setY(2f);
-			setTexture(Assets.get().getPlayerSheet().getTexture("playerDownWalk"));
+			setTexture(Assets.get().getPlayerSheet().getTexturePack("playerDownWalk"));
 		}
 	}
 

@@ -10,6 +10,8 @@ public class SpriteSheet {
     
     private HashMap<String, BufferedImage> images = new HashMap<>();
     
+    private HashMap<String, BufferedImage[]> packs = new HashMap<>();
+    
     public SpriteSheet(String link) {
         try {
             image = ImageIO.read(SpriteSheet.class.getClassLoader().getResourceAsStream(link));
@@ -27,6 +29,13 @@ public class SpriteSheet {
     }
     
     public Texture getTexture(String name) {
-    	return new Texture(getImage(name));
+    	return new Texture(new BufferedImage[]{getImage(name)});
+    }
+    
+    public Texture getTexturePack(String name) {
+    	if (packs.get(name) != null) 
+    		return new Texture(packs.get(name));
+    	else 
+    		return new Texture(new BufferedImage[]{getImage(name+"1"), getImage(name+"2")});
     }
 }

@@ -4,6 +4,7 @@ import gfx.Texture;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import level.Level;
 import maths.Vector2f;
@@ -45,7 +46,7 @@ public abstract class Entity {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(texture.getImage(), (int) (getX() - Camera.get().getX()),
+		g.drawImage(texture.getNext(), (int) (getX() - Camera.get().getX()),
 				(int) (getY() - Camera.get().getY()), (int) getWidth(),
 				(int) getHeight(), null);
 	}
@@ -164,5 +165,13 @@ public abstract class Entity {
 
 	public void setTexture(Texture texture) {
 		this.texture = texture;
+	}
+	
+	public void setTexture(Texture... texture) {
+		BufferedImage[] images = new BufferedImage[texture.length];
+		for (int i=0;i<texture.length;i++) {
+			images[i] = texture[i].getImages()[0];
+		}
+		this.texture = new Texture(images);
 	}
 }
