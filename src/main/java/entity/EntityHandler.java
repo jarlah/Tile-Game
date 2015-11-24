@@ -3,10 +3,20 @@ package entity;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.Getter;
 
-public enum EntityHandler {
-    Singleton;
+
+public class EntityHandler {
+    public static EntityHandler get() { 
+        return Creator.object;
+    }
+
+    private static class Creator {
+        private static final EntityHandler object = new EntityHandler();
+    }
+    
+    private EntityHandler() {}
 
     @Getter
     private final List<Entity> entities = new ArrayList<>();

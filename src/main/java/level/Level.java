@@ -10,21 +10,21 @@ import entity.tiles.Tree;
 import java.util.Random;
 
 public class Level {
-
+	public static final int SCALE = 3;
+	public static final int SIZE = 50;
     private final MasterTile[][] tiles;
-    private final int size = 50;
     private final int lengthX, lengthY;
-    private final int scale = 3;
-    private final Random r = new Random();
+	private static final int SEED = 255;
+    private final Random r = new Random(SEED);
 
     public Level() {
-        lengthX = (MasterCanvas.WIDTH / size) * scale;
-        lengthY = (MasterCanvas.HEIGHT / size) * scale;
+        lengthX = (MasterCanvas.WIDTH / SIZE) * SCALE;
+        lengthY = (MasterCanvas.HEIGHT / SIZE) * SCALE;
         tiles = new MasterTile[lengthX][lengthY];
 
         for (int x = 0; x < lengthX; x++) {
             for (int y = 0; y < lengthY; y++) {
-                TileInfo tileInfo = new TileInfo(x * size, y * size, size);
+                TileInfo tileInfo = new TileInfo(x * SIZE, y * SIZE, SIZE);
                 if (r.nextFloat() < 0.2f) {
                     tiles[x][y] = new MasterTile(new Grass(), new Tree(), tileInfo);
                 } else {
@@ -66,8 +66,8 @@ public class Level {
     }
 
     private CameraView getCameraView() {
-        int cameraX = Camera.O.getX() / size;
-        int cameraY = Camera.O.getY() / size;
+        int cameraX = Camera.get().getX() / SIZE;
+        int cameraY = Camera.get().getY() / SIZE;
 
         if (cameraX < 0) {
             cameraX = 0;
@@ -76,8 +76,8 @@ public class Level {
             cameraY = 0;
         }
 
-        int cameraWidth = MasterCanvas.WIDTH / size + 3;
-        int cameraHeight = MasterCanvas.HEIGHT / size + 3;
+        int cameraWidth = MasterCanvas.WIDTH / SIZE + 3;
+        int cameraHeight = MasterCanvas.HEIGHT / SIZE + 3;
 
         if (cameraX > lengthX - cameraWidth) {
             cameraX = lengthX - cameraWidth;

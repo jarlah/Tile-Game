@@ -2,12 +2,20 @@ package files;
 
 import gfx.SpriteSheet;
 
-public enum Assets {
-    O;
+public class Assets {
+    public static Assets get() { 
+        return Creator.object;
+    }
+
+    private static class Creator {
+        private static final Assets object = new Assets();
+    }
     
-    public SpriteSheet defaultSheet = new SpriteSheet("SpriteSheets/terrain.png");
+    private Assets() {}
     
-    public SpriteSheet playerSheet = new SpriteSheet("Textures/Hero.png");
+    public final SpriteSheet defaultSheet = new SpriteSheet("SpriteSheets/terrain.png");
+    
+    public final SpriteSheet playerSheet = new SpriteSheet("Textures/Hero.png");
     
     public void loadAll() {
         loadCroppedImages();

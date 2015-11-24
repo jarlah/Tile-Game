@@ -1,9 +1,8 @@
 package window;
 
-import files.Assets;
-import game.Game;
 import input.HomeKeyListener;
 import input.HomeMouseListener;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,24 +10,31 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import screen.ScreenHandler;
 
-public enum MasterCanvas {
-    Singleton;
+import screen.ScreenHandler;
+import files.Assets;
+import game.Game;
+
+public class MasterCanvas {
+    public static MasterCanvas M() { 
+        return Creator.object;
+    }
+
+    private static class Creator {
+        private static final MasterCanvas object = new MasterCanvas();
+    }
 
     public static final int WIDTH = 800, HEIGHT = 600;
     private final Canvas canvas;
     private final GameLoop loop;
     private final Dimension defaultSize;
-    private final ScreenHandler screenHandler;
     private int loopTicks = 0;
     private int loopFrames = 0;
     private double loopDelta;
 
     private MasterCanvas() {
-        Assets.O.loadAll();
-        screenHandler = new ScreenHandler();
-        screenHandler.setActiveScreen(new Game());
+        Assets.get().loadAll();
+        ScreenHandler.get().setActiveScreen(Game.G());
         defaultSize = new Dimension(WIDTH, HEIGHT);
         canvas = new Canvas();
         canvas.setMinimumSize(defaultSize);
@@ -57,7 +63,7 @@ public enum MasterCanvas {
     }
 
     private void tick(double delta) {
-        screenHandler.tick(delta);
+        ScreenHandler.get().tick(delta);
     }
 
     private void render(double delta) {
@@ -69,7 +75,7 @@ public enum MasterCanvas {
         Graphics g = bs.getDrawGraphics();
         g.setColor(new Color(158, 172, 255));
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        screenHandler.render(g);
+        ScreenHandler.get().render(g);
         g.dispose();
         bs.show();
     }

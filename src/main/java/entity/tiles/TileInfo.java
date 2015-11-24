@@ -1,11 +1,25 @@
 
 package entity.tiles;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@AllArgsConstructor
-@Getter
 public class TileInfo {
-    private int x, y, size;
+    private final int x, y, size;
+    
+    public TileInfo(int x, int y, int size) {
+    	this.x = x;
+    	this.y = y;
+    	this.size = size;
+    }
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getSize() {
+		return size;
+	}
 }

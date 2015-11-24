@@ -5,16 +5,19 @@
  */
 package entity.tiles;
 
-import files.Assets;
 import java.awt.Graphics;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
+import files.Assets;
+
 public class Tile {
-    private String name;
+    private final String name;
+    
+    public Tile(String name) {
+    	this.name = name;
+    }
 
     public void render(Graphics g, int x, int y, int size) {
-        g.drawImage(Assets.O.defaultSheet.getImage(name), x, y, size, size, null);
+        g.drawImage(Assets.get().defaultSheet.getImage(name), x, y, size, size, null);
     }
 
     public void tick(double delta) {

@@ -1,21 +1,26 @@
 package entity.tiles;
 
 import java.awt.Graphics;
-import lombok.AllArgsConstructor;
+
 import camera.Camera;
 
-@AllArgsConstructor
 public class MasterTile {
 
     private Tile bottom, top;
     private TileInfo tileInfo;
+    
+    public MasterTile(Tile bottom, Tile top, TileInfo tileInfo) {
+    	this.bottom = bottom;
+    	this.top = top;
+    	this.tileInfo = tileInfo;
+    }
 
     public void render(Graphics g) {
         if (bottom != null) {
-            bottom.render(g, tileInfo.getX() - Camera.O.getX(), tileInfo.getY() - Camera.O.getY(), tileInfo.getSize());
+            bottom.render(g, tileInfo.getX() - Camera.get().getX(), tileInfo.getY() - Camera.get().getY(), tileInfo.getSize());
         }
         if (top != null) {
-            top.render(g, tileInfo.getX() - Camera.O.getX(), tileInfo.getY() - Camera.O.getY(), tileInfo.getSize());
+            top.render(g, tileInfo.getX() - Camera.get().getX(), tileInfo.getY() - Camera.get().getY(), tileInfo.getSize());
         }
     }
 
@@ -27,5 +32,29 @@ public class MasterTile {
             top.tick(delta);
         }
     }
+
+	public Tile getBottom() {
+		return bottom;
+	}
+
+	public void setBottom(Tile bottom) {
+		this.bottom = bottom;
+	}
+
+	public Tile getTop() {
+		return top;
+	}
+
+	public void setTop(Tile top) {
+		this.top = top;
+	}
+
+	public TileInfo getTileInfo() {
+		return tileInfo;
+	}
+
+	public void setTileInfo(TileInfo tileInfo) {
+		this.tileInfo = tileInfo;
+	}
 
 }

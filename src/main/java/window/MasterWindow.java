@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 public class MasterWindow {
     private static final String TITLE = "Tile Game";
     private final JFrame frame;
-    private final MasterCanvas masterCanvas = MasterCanvas.Singleton;
+    private final MasterCanvas masterCanvas = MasterCanvas.M();
 
     public MasterWindow() {
         frame = new JFrame(TITLE);
