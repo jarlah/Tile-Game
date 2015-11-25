@@ -1,7 +1,10 @@
-/dist/
 /build/
 /nbproject/private/
 /bin/
 /.settings/
 /target/
 /project/target
+/.project
+/.classpath
+/.cache-main
+/project/project
