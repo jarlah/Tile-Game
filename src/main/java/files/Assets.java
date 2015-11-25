@@ -13,7 +13,7 @@ public class Assets {
         private static final Assets object = new Assets();
     }
     
-    private final Sprite defaultSheet = new Sprite("SpriteSheets/terrain.png");
+    private final Sprite terrainSheet = new Sprite("SpriteSheets/terrain.png");
     private final Sprite playerSheet = new Sprite("Textures/Hero.png");
     
     private Assets() {}

@@ -1,11 +1,11 @@
 package input;
 
-import game.Game;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class HomeKeyListener implements KeyListener {
+import screen.ScreenHandler;
+
+public class MasterKeyListener implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -14,12 +14,11 @@ public class HomeKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Game.get().getPlayer().inputPressed(e);
+        ScreenHandler.get().getPlayer().inputPressed(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        Game.get().getPlayer().inputReleased(e);
+    	ScreenHandler.get().getPlayer().inputReleased(e);
     }
-    
 }

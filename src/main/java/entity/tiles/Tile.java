@@ -20,7 +20,7 @@ public class Tile {
 
 	private BufferedImage loadTile() {
 		if (tile == null) {
-			tile = Assets.get().getDefaultSheet().loadSprite(name, spriteX, spriteY);
+			tile = Assets.get().getTerrainSheet().loadSprite(name, spriteX, spriteY);
 		}
 		return tile;
 	}

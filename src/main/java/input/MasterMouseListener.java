@@ -6,7 +6,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-public class HomeMouseListener implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class MasterMouseListener implements MouseListener, MouseMotionListener, MouseWheelListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {

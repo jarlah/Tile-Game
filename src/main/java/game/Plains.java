@@ -1,9 +1,10 @@
-package level;
+package game;
 
 import java.awt.Graphics;
 import java.util.Random;
 
 import lombok.Getter;
+import screen.Screen;
 import window.MasterCanvas;
 import camera.Camera;
 import entity.tiles.Grass;
@@ -12,24 +13,29 @@ import entity.tiles.TileInfo;
 import entity.tiles.Tree;
 
 @Getter
-public class Level {
-    public static Level get() { 
-        return Creator.object;
+public class Plains extends Screen {
+    public static Plains get() { 
+        return Creator.get();
     }
 
     private static class Creator {
-        private static final Level object = new Level();
+    	private static Plains object;
+    	
+        private static final Plains get() {
+        	if (object == null){
+        		object = new Plains();
+        	}
+        	return object;
+        }
     }
     
-	public static final int SCALE = 3;
-	public static final int SIZE = 50;
+    public static final int SCALE = 3;
 	private static final int SEED = 255;
 	
     private final MasterTile[][] tiles;
-    private final int lengthX, lengthY;
     private final Random r = new Random(SEED);
 
-    private Level() {
+    private Plains() {
         lengthX = (MasterCanvas.WIDTH / SIZE) * SCALE;
         lengthY = (MasterCanvas.HEIGHT / SIZE) * SCALE;
         tiles = new MasterTile[lengthX][lengthY];
@@ -65,7 +71,10 @@ public class Level {
     }
     
     public MasterTile getTile(int x, int y) {
-    	return tiles[x][y];
+    	if (x < tiles.length && y < tiles[x].length) {
+    		return tiles[x][y];
+    	}
+    	return null;
     }
 
     private class CameraView {

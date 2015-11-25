@@ -3,12 +3,14 @@ package entity;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import level.Level;
 import lombok.Getter;
 import lombok.Setter;
 import maths.Vector2f;
+import screen.Screen;
+import screen.ScreenHandler;
 import animation.Animation;
 import camera.Camera;
+import entity.tiles.MasterTile;
 
 @Getter
 @Setter
@@ -61,11 +63,11 @@ public abstract class Entity {
 		boolean collisionX = false;
 		boolean collisionY = false;
 		
-		int cellX = (int) (x / Level.SIZE);
-		int cellY = (int) (y / Level.SIZE);
+		int cellX = (int) (x / Screen.SIZE);
+		int cellY = (int) (y / Screen.SIZE);
 
-		if (cellX < 0 || cellY < 0 || cellX >= Level.get().getLengthX() - 1
-				|| cellY > Level.get().getLengthY() - 1)
+		if (cellX < 0 || cellY < 0 || cellX >= ScreenHandler.get().getActiveScreen().getLengthX() - 1
+				|| cellY > ScreenHandler.get().getActiveScreen().getLengthY() - 1)
 			return false;
 
 		// X
@@ -125,8 +127,8 @@ public abstract class Entity {
 	}
 
 	public boolean isCollision(float x, float y) {
-		if (Level.get().getTile((int) (x / Level.SIZE), (int) (y / Level.SIZE))
-				.getTop() != null) {
+		MasterTile tile = ScreenHandler.get().getActiveScreen().getTile((int) (x / Screen.SIZE), (int) (y / Screen.SIZE));
+		if (tile != null && tile.getTop() != null) {
 			return true;
 		}
 		return false;

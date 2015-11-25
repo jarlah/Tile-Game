@@ -1,8 +1,10 @@
 package window;
 
-import game.Game;
-import input.HomeKeyListener;
-import input.HomeMouseListener;
+import entity.EntityHandler;
+import entity.Player;
+import game.Plains;
+import input.MasterKeyListener;
+import input.MasterMouseListener;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -35,14 +37,17 @@ public class MasterCanvas {
     private double loopDelta = 0d;
 
     private MasterCanvas() {
-        ScreenHandler.get().setActiveScreen(Game.get());
+    	Player player = new Player(WIDTH/2-(40/2), HEIGHT/2-(40/2));
+        ScreenHandler.get().setActiveScreen(Plains.get());
+        ScreenHandler.get().setPlayer(player);
+        EntityHandler.get().addEntity(player);
         defaultSize = new Dimension(WIDTH, HEIGHT);
         canvas = new Canvas();
         canvas.setMinimumSize(defaultSize);
         canvas.setMaximumSize(defaultSize);
         canvas.setPreferredSize(defaultSize);
-        canvas.addKeyListener(new HomeKeyListener());
-        HomeMouseListener mouseListener = new HomeMouseListener();
+        canvas.addKeyListener(new MasterKeyListener());
+        MasterMouseListener mouseListener = new MasterMouseListener();
         canvas.addMouseListener(mouseListener);
         canvas.addMouseMotionListener(mouseListener);
         canvas.addMouseWheelListener(mouseListener);
@@ -60,6 +65,7 @@ public class MasterCanvas {
 
     private void tick(double delta) {
         ScreenHandler.get().tick(delta);
+        EntityHandler.get().tick(delta);
     }
 
     private void render(double delta) {
@@ -72,6 +78,7 @@ public class MasterCanvas {
         g.setColor(new Color(158, 172, 255));
         g.fillRect(0, 0, WIDTH, HEIGHT);
         ScreenHandler.get().render(g);
+        EntityHandler.get().render(g);
         g.dispose();
         bs.show();
     }
