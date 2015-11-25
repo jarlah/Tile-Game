@@ -1,10 +1,11 @@
 package entity;
 
 import files.Assets;
-import gfx.Animation;
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+
+import animation.Animation;
 
 public class Player extends GameActor {
 	private final int frameDelay = 10;

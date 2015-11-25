@@ -1,6 +1,6 @@
 package files;
 
-import gfx.Sprite;
+import graphics.Sprite;
 
 public class Assets {
     public static Assets get() { 

@@ -1,8 +1,10 @@
 package camera;
 
-import entity.Entity;
+import lombok.Getter;
 import window.MasterCanvas;
+import entity.Entity;
 
+@Getter
 public class Camera {
     public static Camera get() { 
         return Creator.object;
@@ -24,13 +26,5 @@ public class Camera {
 	public void setPosition(Entity e) {
 		x = (int) e.getX() - MasterCanvas.WIDTH / 2;
 		y = (int) e.getY() - MasterCanvas.HEIGHT / 2;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
 	}
 }

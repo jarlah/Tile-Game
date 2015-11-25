@@ -1,7 +1,10 @@
 
 package entity.tiles;
 
+import lombok.Getter;
 
+
+@Getter
 public class TileInfo {
     private final int x, y, size;
     
@@ -10,16 +13,4 @@ public class TileInfo {
     	this.y = y;
     	this.size = size;
     }
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public int getSize() {
-		return size;
-	}
 }

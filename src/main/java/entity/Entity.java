@@ -1,14 +1,17 @@
 package entity;
 
-import gfx.Animation;
-
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import level.Level;
+import lombok.Getter;
+import lombok.Setter;
 import maths.Vector2f;
+import animation.Animation;
 import camera.Camera;
 
+@Getter
+@Setter
 public abstract class Entity {
 	float x, y;
 	private final float width, height;
@@ -21,13 +24,13 @@ public abstract class Entity {
 		this(x, y, width, height, new Vector2f());
 	}
 
-	public Entity(float x, float y, float width, float height,
-			Vector2f velocity) {
+	public Entity(float x, float y, float width, float height, Vector2f velocity) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.boundArea = new Rectangle((int) x, (int) y, (int) width, (int) height);
+		this.boundArea = new Rectangle((int) x, (int) y, (int) width,
+				(int) height);
 		this.velocity = velocity;
 	}
 
@@ -37,84 +40,80 @@ public abstract class Entity {
 		oldY = y;
 		updatePosition(delta);
 		checkCollision();
-		
+
 	}
 
 	public void updatePosition(double delta) {
-		x += delta * getVelocity().getX();
-		y += delta * getVelocity().getY();
+		x += delta * velocity.getX();
+		y += delta * velocity.getY();
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(animation.getSprite(), (int) (getX() - Camera.get().getX()),
-				(int) (getY() - Camera.get().getY()), (int) getWidth(),
-				(int) getHeight(), null);
+		g.drawImage(animation.getSprite(), (int) (x - Camera.get().getX()),
+				(int) (y - Camera.get().getY()), (int) width, (int) height, null);
 	}
 
 	public void checkCollision() {
 		boolean collisionX = false;
 		boolean collisionY = false;
-		int cellX = (int) (getX() / Level.SIZE);
-		int cellY = (int) (getY() / Level.SIZE);
+		
+		int cellX = (int) (x / Level.SIZE);
+		int cellY = (int) (y / Level.SIZE);
 
 		if (cellX < 0 || cellY < 0 || cellX >= Level.get().getLengthX() - 1
 				|| cellY > Level.get().getLengthY() - 1)
 			return;
 
 		// X
-		if (getVelocity().getX() < 0) {
+		if (velocity.getX() < 0) {
 			// TOP LEFT
-			collisionX = isCollision(getX(), getY() + getHeight() - 5);
+			collisionX = isCollision(x, y + height - 5);
 
 			// MIDDLE LEFT
-			collisionX |= isCollision(getX(), getY() + (getHeight() / 2));
+			collisionX |= isCollision(x, y + (height / 2));
 
 			// BOTTOM LEFT
-			collisionX |= isCollision(getX() + 5, getY());
+			collisionX |= isCollision(x + 5, y);
 
-		} else if (getVelocity().getX() > 0) {
+		} else if (velocity.getX() > 0) {
 			// TOP RIGHT
-			collisionX = isCollision(getX() + getWidth(), getY()
-					+ getHeight() - 5);
+			collisionX = isCollision(x + width, y + height - 5);
 
 			// MIDDLE RIGHT
-			collisionX |= isCollision(getX() + getWidth(), getY()
-					+ (getHeight() / 2));
+			collisionX |= isCollision(x + width, y + (height / 2));
 
 			// BOTTOM RIGHT
-			collisionX |= isCollision(getX() + getWidth(), getY() + 5);
+			collisionX |= isCollision(x + width, y + 5);
 		}
 		if (collisionX) {
-			getVelocity().setX(0);
+			velocity.setX(0);
 			x = oldX;
 		}
 
 		// Y
-		if (getVelocity().getY() < 0) {
+		if (velocity.getY() < 0) {
 			// BOTTOM LEFT
-			collisionY = isCollision(getX() + 5, getY());
+			collisionY = isCollision(x + 5, y);
 
 			// BOTTOM MIDDLE
-			collisionY |= isCollision(getX() + (getWidth() / 2), getY());
+			collisionY |= isCollision(x + (width / 2), y);
 
 			// BOTTOM RIGHT
-			collisionY |= isCollision(getX() + getWidth() - 5, getY());
+			collisionY |= isCollision(x + width - 5, y);
 
-		} else if (getVelocity().getY() > 0) {
+		} else if (velocity.getY() > 0) {
 			// TOP LEFT
-			collisionY = isCollision(getX(), getY() + getHeight());
+			collisionY = isCollision(x, y + height);
 
 			// TOP MIDDLE
-			collisionY |= isCollision(getX() + (getWidth() / 2), getY()
-					+ getHeight());
+			collisionY |= isCollision(x + (width / 2), y + height);
 
 			// TOP RIGHT
-			collisionY |= isCollision(getX() + getWidth(), getY()
-					+ getHeight());
+			collisionY |= isCollision(x + width, y + height);
 
 		}
 		if (collisionY) {
-			getVelocity().setY(0);
+			velocity.setY(0);
 			y = oldY;
 		}
 	}
@@ -125,45 +124,5 @@ public abstract class Entity {
 			return true;
 		}
 		return false;
-	}
-
-	public float getX() {
-		return x;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public float getY() {
-		return y;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public float getWidth() {
-		return width;
-	}
-
-	public float getHeight() {
-		return height;
-	}
-
-	public Vector2f getVelocity() {
-		return velocity;
-	}
-
-	public Rectangle getBoundArea() {
-		return boundArea;
-	}
-
-	public Animation getAnimation() {
-		return animation;
-	}
-
-	public void setAnimation(Animation animation) {
-		this.animation = animation;
 	}
 }

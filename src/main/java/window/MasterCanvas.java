@@ -12,8 +12,10 @@ import java.awt.image.BufferStrategy;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import lombok.Getter;
 import screen.ScreenHandler;
 
+@Getter
 public class MasterCanvas {
     public static MasterCanvas get() { 
         return Creator.object;
@@ -53,10 +55,6 @@ public class MasterCanvas {
 
     public void stopLoop() {
         loop.stop();
-    }
-
-    public Canvas getCanvas() {
-        return canvas;
     }
 
     private void tick(double delta) {
@@ -133,17 +131,5 @@ public class MasterCanvas {
                 }
             }
         }
-    }
-
-    public int getTicks() {
-        return loopTicks;
-    }
-
-    public int getFrames() {
-        return loopFrames;
-    }
-
-    public double getDelta() {
-        return loopDelta;
     }
 }

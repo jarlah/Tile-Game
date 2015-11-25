@@ -3,6 +3,7 @@ package level;
 import java.awt.Graphics;
 import java.util.Random;
 
+import lombok.Getter;
 import window.MasterCanvas;
 import camera.Camera;
 import entity.tiles.Grass;
@@ -10,6 +11,7 @@ import entity.tiles.MasterTile;
 import entity.tiles.TileInfo;
 import entity.tiles.Tree;
 
+@Getter
 public class Level {
     public static Level get() { 
         return Creator.object;
@@ -21,9 +23,10 @@ public class Level {
     
 	public static final int SCALE = 3;
 	public static final int SIZE = 50;
+	private static final int SEED = 255;
+	
     private final MasterTile[][] tiles;
     private final int lengthX, lengthY;
-	private static final int SEED = 255;
     private final Random r = new Random(SEED);
 
     private Level() {
@@ -94,12 +97,4 @@ public class Level {
         }
         return new CameraView(cameraX, cameraY, cameraWidth, cameraHeight);
     }
-
-	public int getLengthX() {
-		return lengthX;
-	}
-
-	public int getLengthY() {
-		return lengthY;
-	}
 }

@@ -2,13 +2,15 @@ package game;
 
 import java.awt.Graphics;
 
-import camera.Camera;
 import level.Level;
+import lombok.Getter;
 import screen.Screen;
 import window.MasterCanvas;
+import camera.Camera;
 import entity.EntityHandler;
 import entity.Player;
 
+@Getter
 public class Game extends Screen {
     public static Game get() { 
         return Creator.object;
@@ -39,9 +41,4 @@ public class Game extends Screen {
         level.tick(delta);
         EntityHandler.get().tick(delta);
     }
-
-	public Player getPlayer() {
-		return player;
-	}
-    
 }

@@ -2,8 +2,10 @@ package entity.tiles;
 
 import java.awt.Graphics;
 
+import lombok.Getter;
 import camera.Camera;
 
+@Getter
 public class MasterTile {
 
     private Tile bottom, top;
@@ -32,29 +34,4 @@ public class MasterTile {
             top.tick(delta);
         }
     }
-
-	public Tile getBottom() {
-		return bottom;
-	}
-
-	public void setBottom(Tile bottom) {
-		this.bottom = bottom;
-	}
-
-	public Tile getTop() {
-		return top;
-	}
-
-	public void setTop(Tile top) {
-		this.top = top;
-	}
-
-	public TileInfo getTileInfo() {
-		return tileInfo;
-	}
-
-	public void setTileInfo(TileInfo tileInfo) {
-		this.tileInfo = tileInfo;
-	}
-
 }
