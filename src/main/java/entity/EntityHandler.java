@@ -39,8 +39,4 @@ public class EntityHandler {
     public void tick(double delta) {
         entities.stream().forEach((e) -> e.tick(delta));
     }
-
-	public List<Entity> getEntities() {
-		return entities;
-	}
 }
