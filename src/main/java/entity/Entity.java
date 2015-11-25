@@ -1,10 +1,9 @@
 package entity;
 
-import gfx.Texture;
+import gfx.Animation;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 import level.Level;
 import maths.Vector2f;
@@ -15,7 +14,7 @@ public abstract class Entity {
 	private final float width, height;
 	private final Vector2f velocity;
 	private final Rectangle boundArea;
-	private Texture texture;
+	private Animation animation;
 	private float oldX, oldY;
 
 	public Entity(float x, float y, float width, float height) {
@@ -28,16 +27,17 @@ public abstract class Entity {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.boundArea = new Rectangle((int) x, (int) y, (int) width,
-				(int) height);
+		this.boundArea = new Rectangle((int) x, (int) y, (int) width, (int) height);
 		this.velocity = velocity;
 	}
 
 	public void tick(double delta) {
+		animation.update();
 		oldX = x;
 		oldY = y;
 		updatePosition(delta);
 		checkCollision();
+		
 	}
 
 	public void updatePosition(double delta) {
@@ -46,7 +46,7 @@ public abstract class Entity {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(texture.getNext(), (int) (getX() - Camera.get().getX()),
+		g.drawImage(animation.getSprite(), (int) (getX() - Camera.get().getX()),
 				(int) (getY() - Camera.get().getY()), (int) getWidth(),
 				(int) getHeight(), null);
 	}
@@ -159,19 +159,11 @@ public abstract class Entity {
 		return boundArea;
 	}
 
-	public Texture getTexture() {
-		return texture;
+	public Animation getAnimation() {
+		return animation;
 	}
 
-	public void setTexture(Texture texture) {
-		this.texture = texture;
-	}
-	
-	public void setTexture(Texture... texture) {
-		BufferedImage[] images = new BufferedImage[texture.length];
-		for (int i=0;i<texture.length;i++) {
-			images[i] = texture[i].getImages()[0];
-		}
-		this.texture = new Texture(images);
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
 	}
 }

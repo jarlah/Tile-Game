@@ -1,5 +1,6 @@
 package window;
 
+import game.Game;
 import input.HomeKeyListener;
 import input.HomeMouseListener;
 
@@ -12,8 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import screen.ScreenHandler;
-import files.Assets;
-import game.Game;
 
 public class MasterCanvas {
     public static MasterCanvas get() { 
@@ -33,7 +32,6 @@ public class MasterCanvas {
     private double loopDelta;
 
     private MasterCanvas() {
-        Assets.get().loadAll();
         ScreenHandler.get().setActiveScreen(Game.get());
         defaultSize = new Dimension(WIDTH, HEIGHT);
         canvas = new Canvas();

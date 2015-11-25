@@ -1,6 +1,6 @@
 package files;
 
-import gfx.SpriteSheet;
+import gfx.Sprite;
 
 public class Assets {
     public static Assets get() { 
@@ -11,38 +11,29 @@ public class Assets {
         private static final Assets object = new Assets();
     }
     
-    private final SpriteSheet defaultSheet;
-    private final SpriteSheet playerSheet;
+    private final Sprite defaultSheet = new Sprite("SpriteSheets/terrain.png");
+    private final Sprite playerSheet = new Sprite("Textures/Hero.png");
     
-    private Assets() {
-    	defaultSheet = new SpriteSheet("SpriteSheets/terrain.png");
-        playerSheet = new SpriteSheet("Textures/Hero.png");
-    }
-    
-    public void loadAll() {
-        loadCroppedImages();
-    }
+    private Assets() {}
 
-    private void loadCroppedImages() {
-        defaultSheet.loadCropped("grass", 16, 144, 16, 16);
-        defaultSheet.loadCropped("tree", 240, 0, 16, 16);
-        playerSheet.loadCropped("playerLeftWalk1", 48, 16, 16, 16);
-        playerSheet.loadCropped("playerLeftWalk2", 16, 16, 16, 16);
-        playerSheet.loadCropped("playerRightWalk1", 64, 16, 16, 16);
-        playerSheet.loadCropped("playerRightWalk2", 96, 16, 16, 16);
-        playerSheet.loadCropped("playerDownStill", 64, 0, 16, 16);
-        playerSheet.loadCropped("playerDownWalk1", 80, 0, 16, 16);
-        playerSheet.loadCropped("playerDownWalk2", 112, 0, 16, 16);
-        playerSheet.loadCropped("playerUpStill", 32, 0, 16, 16);
-        playerSheet.loadCropped("playerUpWalk1", 48, 0, 16, 16);
-        playerSheet.loadCropped("playerUpWalk2", 16, 0, 16, 16);
-    }
+//        defaultSheet.loadSprite("grass", 16, 144);
+//        defaultSheet.loadSprite("tree", 240, 0);
+//        playerSheet.loadSprite("playerLeftWalk1", 48, 16);
+//        playerSheet.loadSprite("playerLeftWalk2", 16, 16);
+//        playerSheet.loadSprite("playerRightWalk1", 64, 16);
+//        playerSheet.loadSprite("playerRightWalk2", 96, 16);
+//        playerSheet.loadSprite("playerDownStill", 64, 0);
+//        playerSheet.loadSprite("playerDownWalk1", 80, 0);
+//        playerSheet.loadSprite("playerDownWalk2", 112, 0);
+//        playerSheet.loadSprite("playerUpStill", 32, 0);
+//        playerSheet.loadSprite("playerUpWalk1", 48, 0);
+//        playerSheet.loadSprite("playerUpWalk2", 16, 0);
 
-	public SpriteSheet getDefaultSheet() {
+	public Sprite getDefaultSheet() {
 		return defaultSheet;
 	}
 
-	public SpriteSheet getPlayerSheet() {
+	public Sprite getPlayerSheet() {
 		return playerSheet;
 	}
 }

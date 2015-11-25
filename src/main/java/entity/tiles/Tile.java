@@ -11,13 +11,17 @@ import files.Assets;
 
 public class Tile {
     private final String name;
+	private int spriteX;
+	private int spriteY;
     
-    public Tile(String name) {
+    public Tile(String name, int x, int y) {
     	this.name = name;
+    	this.spriteX = x;
+    	this.spriteY = y;
     }
 
     public void render(Graphics g, int x, int y, int size) {
-        g.drawImage(Assets.get().getDefaultSheet().getImage(name), x, y, size, size, null);
+        g.drawImage(Assets.get().getDefaultSheet().loadSprite(name, spriteX, spriteY), x, y, size, size, null);
     }
 
     public void tick(double delta) {
