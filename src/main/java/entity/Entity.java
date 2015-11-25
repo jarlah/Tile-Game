@@ -10,7 +10,10 @@ import screen.Screen;
 import screen.ScreenHandler;
 import animation.Animation;
 import camera.Camera;
+import entity.tiles.Dungeon;
 import entity.tiles.MasterTile;
+import entity.tiles.Tile;
+import game.Castle;
 
 @Getter
 @Setter
@@ -60,8 +63,8 @@ public abstract class Entity {
 	}
 
 	public boolean checkCollision() {
-		boolean collisionX = false;
-		boolean collisionY = false;
+		Tile collisionX = null;
+		Tile collisionY = null;
 		
 		int cellX = (int) (x / Screen.SIZE);
 		int cellY = (int) (y / Screen.SIZE);
@@ -76,22 +79,23 @@ public abstract class Entity {
 			collisionX = isCollision(x, y + height - 5);
 
 			// MIDDLE LEFT
-			collisionX |= isCollision(x, y + (height / 2));
+			collisionX = collisionX != null ? collisionX : isCollision(x, y + (height / 2));
 
 			// BOTTOM LEFT
-			collisionX |= isCollision(x + 5, y);
+			collisionX = collisionX != null ? collisionX : isCollision(x + 5, y);
 
 		} else if (velocity.getX() > 0) {
 			// TOP RIGHT
 			collisionX = isCollision(x + width, y + height - 5);
 
 			// MIDDLE RIGHT
-			collisionX |= isCollision(x + width, y + (height / 2));
+			collisionX = collisionX != null ? collisionX : isCollision(x + width, y + (height / 2));
 
 			// BOTTOM RIGHT
-			collisionX |= isCollision(x + width, y + 5);
+			collisionX = collisionX != null ? collisionX : isCollision(x + width, y + 5);
 		}
-		if (collisionX) {
+
+		if (collisionX != null) {
 			velocity.setX(0);
 			x = oldX;
 		}
@@ -102,35 +106,36 @@ public abstract class Entity {
 			collisionY = isCollision(x + 5, y);
 
 			// BOTTOM MIDDLE
-			collisionY |= isCollision(x + (width / 2), y);
+			collisionY = collisionY != null ? collisionY : isCollision(x + (width / 2), y);
 
 			// BOTTOM RIGHT
-			collisionY |= isCollision(x + width - 5, y);
+			collisionY = collisionY != null ? collisionY : isCollision(x + width - 5, y);
 
 		} else if (velocity.getY() > 0) {
 			// TOP LEFT
 			collisionY = isCollision(x, y + height);
 
 			// TOP MIDDLE
-			collisionY |= isCollision(x + (width / 2), y + height);
+			collisionY = collisionY != null ? collisionY : isCollision(x + (width / 2), y + height);
 
 			// TOP RIGHT
-			collisionY |= isCollision(x + width, y + height);
+			collisionY = collisionY != null ? collisionY : isCollision(x + width, y + height);
 
 		}
-		if (collisionY) {
+		if (collisionY != null) {
 			velocity.setY(0);
 			y = oldY;
 		}
 
-		return collisionX || collisionY;
+		if (collisionX instanceof Dungeon || collisionY instanceof Dungeon) {
+			ScreenHandler.get().setActiveScreen(Castle.get());
+		}
+
+		return collisionX != null || collisionY != null;
 	}
 
-	public boolean isCollision(float x, float y) {
+	public Tile isCollision(float x, float y) {
 		MasterTile tile = ScreenHandler.get().getActiveScreen().getTile((int) (x / Screen.SIZE), (int) (y / Screen.SIZE));
-		if (tile != null && tile.getTop() != null) {
-			return true;
-		}
-		return false;
+		return tile != null ? tile.getTop() : null;
 	}
 }

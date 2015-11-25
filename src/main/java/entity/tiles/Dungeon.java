@@ -3,6 +3,6 @@ package entity.tiles;
 
 public class Dungeon extends  Tile {
 	public Dungeon() {
-        super("dungeon", 1, 9);
+        super("dungeon", 12, 2);
     }
 }

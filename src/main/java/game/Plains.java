@@ -7,6 +7,7 @@ import lombok.Getter;
 import screen.Screen;
 import window.MasterCanvas;
 import camera.Camera;
+import entity.tiles.Dungeon;
 import entity.tiles.Grass;
 import entity.tiles.MasterTile;
 import entity.tiles.TileInfo;
@@ -30,21 +31,23 @@ public class Plains extends Screen {
     }
     
     public static final int SCALE = 3;
-	private static final int SEED = 255;
 	
     private final MasterTile[][] tiles;
-    private final Random r = new Random(SEED);
+    private final Random r = new Random();
 
     private Plains() {
         lengthX = (MasterCanvas.WIDTH / SIZE) * SCALE;
         lengthY = (MasterCanvas.HEIGHT / SIZE) * SCALE;
         tiles = new MasterTile[lengthX][lengthY];
-
+        boolean dungeonPlaced = false;
         for (int x = 0; x < lengthX; x++) {
             for (int y = 0; y < lengthY; y++) {
                 TileInfo tileInfo = new TileInfo(x * SIZE, y * SIZE, SIZE);
                 if (r.nextFloat() < 0.2f) {
                     tiles[x][y] = new MasterTile(new Grass(), new Tree(), tileInfo);
+                } else if (r.nextFloat() < 0.1f && !dungeonPlaced) {
+                    tiles[x][y] = new MasterTile(new Grass(), new Dungeon(), tileInfo);
+                    dungeonPlaced = true;
                 } else {
                     tiles[x][y] = new MasterTile(new Grass(), null, tileInfo);
                 }

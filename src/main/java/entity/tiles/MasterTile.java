@@ -2,20 +2,16 @@ package entity.tiles;
 
 import java.awt.Graphics;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import camera.Camera;
 
 @Getter
+@AllArgsConstructor
 public class MasterTile {
 
     private Tile bottom, top;
     private TileInfo tileInfo;
-    
-    public MasterTile(Tile bottom, Tile top, TileInfo tileInfo) {
-    	this.bottom = bottom;
-    	this.top = top;
-    	this.tileInfo = tileInfo;
-    }
 
     public void render(Graphics g) {
         if (bottom != null) {
