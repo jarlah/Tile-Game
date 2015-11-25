@@ -8,13 +8,13 @@ import java.awt.image.BufferedImage;
 import animation.Animation;
 
 public class Player extends GameActor {
-	private final int frameDelay = 10;
+	private static final int FRAME_DELAY = 10;
 	
-	private Animation walkLeftAn = new LeftAnimation(frameDelay);
-	private Animation walkRightAn = new RightAnimation(frameDelay);
-	private Animation standingAn = new StandingAnimation(frameDelay);
-	private Animation walkUpAn = new UpAnimation(frameDelay);
-	private Animation walkDownAn = new DownAnimation(frameDelay);
+	private Animation walkLeftAn = new LeftAnimation(FRAME_DELAY);
+	private Animation walkRightAn = new RightAnimation(FRAME_DELAY);
+	private Animation standingAn = new StandingAnimation(FRAME_DELAY);
+	private Animation walkUpAn = new UpAnimation(FRAME_DELAY);
+	private Animation walkDownAn = new DownAnimation(FRAME_DELAY);
 	
 	class UpAnimation extends Animation{
 		public UpAnimation(int frameDelay) {
@@ -101,8 +101,6 @@ public class Player extends GameActor {
 	private void resetAnimation() {
 		animation.stop();
 		animation.reset();
-		animation = standingAn;
-		setAnimation(animation);
 	}
    
 	public void inputPressed(KeyEvent e) {
@@ -129,19 +127,27 @@ public class Player extends GameActor {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_A:
 			getVelocity().setX(0);
-			resetAnimation();
+			if (animation instanceof LeftAnimation) {
+				resetAnimation();
+			}
 			break;
 		case KeyEvent.VK_D:
 			getVelocity().setX(0);
-			resetAnimation();
+			if (animation instanceof RightAnimation) {
+				resetAnimation();
+			}
 			break;
 		case KeyEvent.VK_W:
 			getVelocity().setY(0);
-			resetAnimation();
+			if (animation instanceof UpAnimation) {
+				resetAnimation();
+			}
 			break;
 		case KeyEvent.VK_S:
 			getVelocity().setY(0);
-			resetAnimation();
+			if (animation instanceof DownAnimation) {
+				resetAnimation();
+			}
 		}
 	}
 }

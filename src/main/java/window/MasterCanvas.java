@@ -26,12 +26,13 @@ public class MasterCanvas {
     }
 
     public static final int WIDTH = 800, HEIGHT = 600;
+    
     private final Canvas canvas;
     private final GameLoop loop;
     private final Dimension defaultSize;
     private int loopTicks = 0;
     private int loopFrames = 0;
-    private double loopDelta;
+    private double loopDelta = 0d;
 
     private MasterCanvas() {
         ScreenHandler.get().setActiveScreen(Game.get());

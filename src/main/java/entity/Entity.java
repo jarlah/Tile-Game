@@ -35,12 +35,16 @@ public abstract class Entity {
 	}
 
 	public void tick(double delta) {
-		animation.update();
 		oldX = x;
 		oldY = y;
 		updatePosition(delta);
-		checkCollision();
-
+		boolean collision = checkCollision();
+		if (collision) {
+			animation.stop();
+			animation.reset();
+		}else {
+			animation.update();
+		}
 	}
 
 	public void updatePosition(double delta) {
@@ -53,7 +57,7 @@ public abstract class Entity {
 				(int) (y - Camera.get().getY()), (int) width, (int) height, null);
 	}
 
-	public void checkCollision() {
+	public boolean checkCollision() {
 		boolean collisionX = false;
 		boolean collisionY = false;
 		
@@ -62,7 +66,7 @@ public abstract class Entity {
 
 		if (cellX < 0 || cellY < 0 || cellX >= Level.get().getLengthX() - 1
 				|| cellY > Level.get().getLengthY() - 1)
-			return;
+			return false;
 
 		// X
 		if (velocity.getX() < 0) {
@@ -116,6 +120,8 @@ public abstract class Entity {
 			velocity.setY(0);
 			y = oldY;
 		}
+
+		return collisionX || collisionY;
 	}
 
 	public boolean isCollision(float x, float y) {
