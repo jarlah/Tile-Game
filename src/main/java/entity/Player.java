@@ -1,11 +1,15 @@
 package entity;
 
-import files.Assets;
-
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
+import screen.ScreenHandler;
 import animation.Animation;
+import entity.tiles.Dungeon;
+import entity.tiles.Enemy;
+import entity.tiles.Tile;
+import files.Assets;
+import game.Castle;
 
 public class Player extends GameActor {
 	private static final int FRAME_DELAY = 10;
@@ -73,10 +77,6 @@ public class Player extends GameActor {
 	
 	public Player(float x, float y) {
 		super(x, y, 30, 30);
-		initialAnimation();
-	}
-	
-	private void initialAnimation() {
 		animation = standingAn;
 		animation.start();
 		setAnimation(animation);
@@ -156,6 +156,17 @@ public class Player extends GameActor {
 			if (animation instanceof DownAnimation) {
 				resetAnimation();
 			}
+		}
+	}
+
+	@Override
+	public void handleCollision(Tile collisionX, Tile collisionY) {
+		if (collisionX instanceof Dungeon || collisionY instanceof Dungeon) {
+			System.out.println("Entering dungeon");
+			ScreenHandler.get().setActiveScreen(Castle.get());
+		}
+		if (collisionX instanceof Enemy || collisionY instanceof Enemy) {
+			System.out.println("Whoaaa!! an ememy!!");
 		}
 	}
 }

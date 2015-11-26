@@ -9,5 +9,3 @@ lazy val root = (project in file(".")).
   settings(
     name := "Tile Game"
   )
-  
-libraryDependencies += "org.projectlombok" % "lombok" % "1.16.6"

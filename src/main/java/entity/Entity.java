@@ -3,28 +3,21 @@ package entity;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import lombok.Getter;
-import lombok.Setter;
 import maths.Vector2f;
-import screen.Screen;
 import screen.ScreenHandler;
 import animation.Animation;
 import camera.Camera;
-import entity.tiles.Dungeon;
 import entity.tiles.MasterTile;
 import entity.tiles.Tile;
-import game.Castle;
 
-@Getter
-@Setter
 public abstract class Entity {
 	float x, y;
 	private final float width, height;
 	private final Vector2f velocity;
-	private final Rectangle boundArea;
-	private Animation animation;
 	private float oldX, oldY;
-
+	private Rectangle boundArea;
+	private Animation animation;
+	
 	public Entity(float x, float y, float width, float height) {
 		this(x, y, width, height, new Vector2f());
 	}
@@ -34,8 +27,7 @@ public abstract class Entity {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.boundArea = new Rectangle((int) x, (int) y, (int) width,
-				(int) height);
+		this.boundArea = new Rectangle((int) x, (int) y, (int) width, (int) height);
 		this.velocity = velocity;
 	}
 
@@ -66,11 +58,11 @@ public abstract class Entity {
 		Tile collisionX = null;
 		Tile collisionY = null;
 		
-		int cellX = (int) (x / Screen.SIZE);
-		int cellY = (int) (y / Screen.SIZE);
+		int cellX = (int) (x / 50);
+		int cellY = (int) (y / 50);
 
-		if (cellX < 0 || cellY < 0 || cellX >= ScreenHandler.get().getActiveScreen().getLengthX() - 1
-				|| cellY > ScreenHandler.get().getActiveScreen().getLengthY() - 1)
+		if (cellX < 0 || cellY < 0 || cellX >= ScreenHandler.get().getActiveScreen().getLevel().getLengthX() - 1
+				|| cellY > ScreenHandler.get().getActiveScreen().getLevel().getLengthY() - 1)
 			return false;
 
 		// X
@@ -126,16 +118,76 @@ public abstract class Entity {
 			velocity.setY(0);
 			y = oldY;
 		}
-
-		if (collisionX instanceof Dungeon || collisionY instanceof Dungeon) {
-			ScreenHandler.get().setActiveScreen(Castle.get());
-		}
+		
+		handleCollision(collisionX, collisionY);
 
 		return collisionX != null || collisionY != null;
 	}
 
+	public abstract void handleCollision(Tile collisionX, Tile collisionY);
+
 	public Tile isCollision(float x, float y) {
-		MasterTile tile = ScreenHandler.get().getActiveScreen().getTile((int) (x / Screen.SIZE), (int) (y / Screen.SIZE));
+		MasterTile tile = ScreenHandler.get().getActiveScreen().getTile((int) (x / 50), (int) (y / 50));
 		return tile != null ? tile.getTop() : null;
+	}
+
+	public float getX() {
+		return x;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public float getY() {
+		return y;
+	}
+
+	public void setY(float y) {
+		this.y = y;
+	}
+
+	public float getOldX() {
+		return oldX;
+	}
+
+	public void setOldX(float oldX) {
+		this.oldX = oldX;
+	}
+
+	public float getOldY() {
+		return oldY;
+	}
+
+	public void setOldY(float oldY) {
+		this.oldY = oldY;
+	}
+
+	public Rectangle getBoundArea() {
+		return boundArea;
+	}
+
+	public void setBoundArea(Rectangle boundArea) {
+		this.boundArea = boundArea;
+	}
+
+	public Animation getAnimation() {
+		return animation;
+	}
+
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public Vector2f getVelocity() {
+		return velocity;
 	}
 }

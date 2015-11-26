@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import screen.Screen;
 import entity.tiles.MasterTile;
+import files.Level;
 
 public class Castle extends Screen {
 	public static Castle get() {
@@ -22,14 +23,11 @@ public class Castle extends Screen {
 		}
 	}
 
-	private Castle() {
-		lengthX = 800;
-		lengthY = 600;
-	}
+	private Castle() {}
 
 	public void render(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, lengthX, lengthY);
+		g.fillRect(0, 0, 800, 600);
 		g.setColor(Color.WHITE);
 		g.drawString("Not implemented yet", 300, 300);
 	}
@@ -40,6 +38,11 @@ public class Castle extends Screen {
 
 	@Override
 	public MasterTile getTile(int x, int y) {
+		return null;
+	}
+
+	@Override
+	public Level getLevel() {
 		return null;
 	}
 }

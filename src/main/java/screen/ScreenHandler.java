@@ -2,14 +2,11 @@ package screen;
 
 import java.awt.Graphics;
 
-import lombok.Getter;
-import lombok.Setter;
 import camera.Camera;
 import entity.Player;
 import entity.tiles.MasterTile;
+import files.Level;
 
-@Getter
-@Setter
 public class ScreenHandler extends Screen {
     public static ScreenHandler get() { 
         return Creator.object;
@@ -45,5 +42,26 @@ public class ScreenHandler extends Screen {
 			return activeScreen.getTile(x, y);
 		}
 		return null;
+	}
+
+	public Screen getActiveScreen() {
+		return activeScreen;
+	}
+
+	public void setActiveScreen(Screen activeScreen) {
+		this.activeScreen = activeScreen;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	@Override
+	public Level getLevel() {
+		return this.activeScreen.getLevel();
 	}
 }

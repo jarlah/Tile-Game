@@ -1,35 +1,62 @@
 package entity.tiles;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
-import files.Assets;
+import animation.Animation;
 
 public class Tile {
-	private BufferedImage tile = null;
-
-	private final String name;
-	private final int spriteX;
-	private final int spriteY;
-
-	public Tile(String name, int x, int y) {
-		this.name = name;
-		this.spriteX = x;
-		this.spriteY = y;
+	public static final int FRAME_DELAY = 10;
+	public static final int TILE_SIZE = 16;
+	
+	private Rectangle boundArea;
+	private Animation animation;
+	private final int x, y, size;
+	
+	public Tile(TileInfo tileInfo, int size) {
+		this(tileInfo.getX(), tileInfo.getY(), size);
 	}
-
-	private BufferedImage loadTile() {
-		if (tile == null) {
-			tile = Assets.get().getTerrainSheet().loadSprite(name, spriteX, spriteY);
-		}
-		return tile;
+	
+	public Tile(int x, int y, int size) {
+		this.x = x;
+		this.y = y;
+		this.size = size;
+		boundArea = new Rectangle(x, y, size, size);
 	}
 
 	public void render(Graphics g, int x, int y, int size) {
-		g.drawImage(loadTile(), x, y, size, size, null);
+		g.drawImage(animation.getSprite(), x, y, size, size, null);
 	}
 
 	public void tick(double delta) {
+		// update animation
+	}
 
+	public Rectangle getBoundArea() {
+		return boundArea;
+	}
+
+	public void setBoundArea(Rectangle boundArea) {
+		this.boundArea = boundArea;
+	}
+
+	public Animation getAnimation() {
+		return animation;
+	}
+
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getSize() {
+		return size;
 	}
 }

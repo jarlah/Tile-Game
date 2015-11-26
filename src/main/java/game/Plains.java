@@ -1,19 +1,13 @@
 package game;
 
 import java.awt.Graphics;
-import java.util.Random;
 
-import lombok.Getter;
 import screen.Screen;
 import window.MasterCanvas;
 import camera.Camera;
-import entity.tiles.Dungeon;
-import entity.tiles.Grass;
 import entity.tiles.MasterTile;
-import entity.tiles.TileInfo;
-import entity.tiles.Tree;
+import files.Level;
 
-@Getter
 public class Plains extends Screen {
     public static Plains get() { 
         return Creator.get();
@@ -31,35 +25,16 @@ public class Plains extends Screen {
     }
     
     public static final int SCALE = 3;
-	
-    private final MasterTile[][] tiles;
-    private final Random r = new Random();
 
-    private Plains() {
-        lengthX = (MasterCanvas.WIDTH / SIZE) * SCALE;
-        lengthY = (MasterCanvas.HEIGHT / SIZE) * SCALE;
-        tiles = new MasterTile[lengthX][lengthY];
-        boolean dungeonPlaced = false;
-        for (int x = 0; x < lengthX; x++) {
-            for (int y = 0; y < lengthY; y++) {
-                TileInfo tileInfo = new TileInfo(x * SIZE, y * SIZE, SIZE);
-                if (r.nextFloat() < 0.2f) {
-                    tiles[x][y] = new MasterTile(new Grass(), new Tree(), tileInfo);
-                } else if (r.nextFloat() < 0.1f && !dungeonPlaced) {
-                    tiles[x][y] = new MasterTile(new Grass(), new Dungeon(), tileInfo);
-                    dungeonPlaced = true;
-                } else {
-                    tiles[x][y] = new MasterTile(new Grass(), null, tileInfo);
-                }
-            }
-        }
-    }
+    private final Level level = new Level("Levels/Plains.csv");
+
+    private Plains() {}
 
     public void render(Graphics g) {
         CameraView cameraInfo = getCameraView();
         for (int x = cameraInfo.cameraX; x < cameraInfo.cameraWidth + cameraInfo.cameraX; x++) {
             for (int y = cameraInfo.cameraY; y < cameraInfo.cameraHeight + cameraInfo.cameraY; y++) {
-                tiles[x][y].render(g);
+            	level.getTiles()[x][y].render(g);
             }
         }
     }
@@ -68,14 +43,14 @@ public class Plains extends Screen {
         CameraView cameraInfo = getCameraView();
         for (int x = cameraInfo.cameraX; x < cameraInfo.cameraWidth + cameraInfo.cameraX; x++) {
             for (int y = cameraInfo.cameraY; y < cameraInfo.cameraHeight + cameraInfo.cameraY; y++) {
-                tiles[x][y].tick(delta);
+            	level.getTiles()[x][y].tick(delta);
             }
         }
     }
     
     public MasterTile getTile(int x, int y) {
-    	if (x < tiles.length && y < tiles[x].length) {
-    		return tiles[x][y];
+    	if (x < level.getTiles().length && y < level.getTiles()[x].length) {
+    		return level.getTiles()[x][y];
     	}
     	return null;
     }
@@ -91,22 +66,26 @@ public class Plains extends Screen {
     }
 
     private CameraView getCameraView() {
-        int cameraX = Camera.get().getX() / SIZE;
-        int cameraY = Camera.get().getY() / SIZE;
+        int cameraX = Camera.get().getX() / level.getSize();
+        int cameraY = Camera.get().getY() / level.getSize();
         if (cameraX < 0) {
             cameraX = 0;
         }
         if (cameraY < 0) {
             cameraY = 0;
         }
-        int cameraWidth = MasterCanvas.WIDTH / SIZE + 3;
-        int cameraHeight = MasterCanvas.HEIGHT / SIZE + 3;
-        if (cameraX > lengthX - cameraWidth) {
-            cameraX = lengthX - cameraWidth;
+        int cameraWidth = MasterCanvas.WIDTH / level.getSize() + 3;
+        int cameraHeight = MasterCanvas.HEIGHT / level.getSize() + 3;
+        if (cameraX > level.getLengthX() - cameraWidth) {
+            cameraX = level.getLengthX() - cameraWidth;
         }
-        if (cameraY > lengthY - cameraHeight) {
-            cameraY = lengthY - cameraHeight;
+        if (cameraY > level.getLengthY() - cameraHeight) {
+            cameraY = level.getLengthY() - cameraHeight;
         }
         return new CameraView(cameraX, cameraY, cameraWidth, cameraHeight);
     }
+
+	public Level getLevel() {
+		return level;
+	}
 }

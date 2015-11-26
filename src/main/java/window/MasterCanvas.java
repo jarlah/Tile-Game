@@ -1,8 +1,5 @@
 package window;
 
-import entity.EntityHandler;
-import entity.Player;
-import game.Plains;
 import input.MasterKeyListener;
 import input.MasterMouseListener;
 
@@ -14,10 +11,11 @@ import java.awt.image.BufferStrategy;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import lombok.Getter;
 import screen.ScreenHandler;
+import entity.EntityHandler;
+import entity.Player;
+import game.Plains;
 
-@Getter
 public class MasterCanvas {
     public static MasterCanvas get() { 
         return Creator.object;
@@ -140,4 +138,28 @@ public class MasterCanvas {
             }
         }
     }
+
+	public Canvas getCanvas() {
+		return canvas;
+	}
+
+	public GameLoop getLoop() {
+		return loop;
+	}
+
+	public Dimension getDefaultSize() {
+		return defaultSize;
+	}
+
+	public int getLoopTicks() {
+		return loopTicks;
+	}
+
+	public int getLoopFrames() {
+		return loopFrames;
+	}
+
+	public double getLoopDelta() {
+		return loopDelta;
+	}
 }
