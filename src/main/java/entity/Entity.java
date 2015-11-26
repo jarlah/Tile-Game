@@ -9,6 +9,7 @@ import animation.Animation;
 import camera.Camera;
 import entity.tiles.MasterTile;
 import entity.tiles.Tile;
+import files.Level;
 
 public abstract class Entity {
 	float x, y;
@@ -61,8 +62,13 @@ public abstract class Entity {
 		int cellX = (int) (x / 50);
 		int cellY = (int) (y / 50);
 
-		if (cellX < 0 || cellY < 0 || cellX >= ScreenHandler.get().getActiveScreen().getLevel().getLengthX() - 1
-				|| cellY > ScreenHandler.get().getActiveScreen().getLevel().getLengthY() - 1)
+		final Level level = ScreenHandler.get().getActiveScreen().getLevel();
+		
+		if (level == null) {
+			return false;
+		}
+		
+		if (cellX < 0 || cellY < 0 || cellX >= level.getLengthX() - 1 || cellY > level.getLengthY() - 1)
 			return false;
 
 		// X
