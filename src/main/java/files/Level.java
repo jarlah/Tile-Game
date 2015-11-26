@@ -17,19 +17,26 @@ import entity.tiles.Tree;
 
 public class Level {
 	private MasterTile[][] tiles;
-	
-	public final int size = 50;
+	private final int tileSize = 50;
+	private final int minTilesX = 16 + 3;
+	private final int minTilesY = 12 + 3;
 	
 	private int lengthX, lengthY;
 
 	public Level(String link) {
 		List<TileRow> rows = loadTileRows(link);
 		lengthX = rows.get(0).tiles.size();
+		if (lengthX < minTilesX) {
+			throw new IllegalArgumentException("in level " + link + " -> length x " + lengthX + " is smaller than minimum length x " + minTilesX);
+		}
 		lengthY = rows.size();
+		if (lengthY < minTilesY) {
+			throw new IllegalArgumentException("in level " + link + " -> length y " + lengthY + " is smaller than minimum length y " + minTilesY);
+		}
 		tiles = new MasterTile[lengthX][lengthY];
 		for (int x = 0; x < lengthX; x++) {
 			for (int y = 0; y < lengthY; y++) {
-				TileInfo tileInfo = new TileInfo(x * size, y * size, size);
+				TileInfo tileInfo = new TileInfo(x * tileSize, y * tileSize, tileSize);
 				Class<? extends Tile> tile = rows.get(y).tiles.get(x);
 				Tile top = null;
 				if (tile.isAssignableFrom(Tree.class)) {
@@ -90,7 +97,7 @@ public class Level {
 	}
 
 	public int getSize() {
-		return size;
+		return tileSize;
 	}
 
 	public int getLengthX() {
