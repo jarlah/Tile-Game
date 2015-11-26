@@ -19,8 +19,10 @@ public class Player extends GameActor {
 	class UpAnimation extends Animation{
 		public UpAnimation(int frameDelay) {
 			super(new BufferedImage[]{
-				Assets.get().getPlayerSheet().loadSprite("playerUpWalk1", 3, 0), 
-				Assets.get().getPlayerSheet().loadSprite("playerUpWalk2", 1, 0)
+				Assets.get().getPlayerSheet().loadSprite("playerUpWalk1", 0, 0),
+				Assets.get().getPlayerSheet().loadSprite("playerUpWalk2", 1, 0),
+				Assets.get().getPlayerSheet().loadSprite("playerUpWalk3", 2, 0), 
+				Assets.get().getPlayerSheet().loadSprite("playerUpWalk4", 3, 0)
 			}, frameDelay);
 		} 
 	}
@@ -28,7 +30,9 @@ public class Player extends GameActor {
 	class DownAnimation extends Animation{
 		public DownAnimation(int frameDelay) {
 			super(new BufferedImage[]{
+			    Assets.get().getPlayerSheet().loadSprite("playerDownWalk1", 4, 0), 
 				Assets.get().getPlayerSheet().loadSprite("playerDownWalk1", 5, 0), 
+				Assets.get().getPlayerSheet().loadSprite("playerDownWalk2", 6, 0),
 				Assets.get().getPlayerSheet().loadSprite("playerDownWalk2", 7, 0)
 			}, frameDelay);
 		} 
@@ -37,8 +41,10 @@ public class Player extends GameActor {
 	class LeftAnimation extends Animation{
 		public LeftAnimation(int frameDelay) {
 			super(new BufferedImage[]{
-				Assets.get().getPlayerSheet().loadSprite("playerLeftWalk1", 3, 1), 
-				Assets.get().getPlayerSheet().loadSprite("playerLeftWalk2", 1, 1)
+				Assets.get().getPlayerSheet().loadSprite("playerLeftWalk1", 0, 1),
+				Assets.get().getPlayerSheet().loadSprite("playerLeftWalk2", 1, 1),
+				Assets.get().getPlayerSheet().loadSprite("playerLeftWalk3", 2, 1), 
+				Assets.get().getPlayerSheet().loadSprite("playerLeftWalk4", 3, 1)
 			}, frameDelay);
 		} 
 	}
@@ -46,8 +52,10 @@ public class Player extends GameActor {
 	class RightAnimation extends Animation{
 		public RightAnimation(int frameDelay) {
 			super(new BufferedImage[]{
-				Assets.get().getPlayerSheet().loadSprite("playerRightWalk1", 4, 1), 
-				Assets.get().getPlayerSheet().loadSprite("playerRightWalk2", 6, 1)
+				Assets.get().getPlayerSheet().loadSprite("playerRightWalk1", 7, 1), 
+				Assets.get().getPlayerSheet().loadSprite("playerRightWalk2", 6, 1), 
+				Assets.get().getPlayerSheet().loadSprite("playerRightWalk3", 5, 1), 
+				Assets.get().getPlayerSheet().loadSprite("playerRightWalk4", 4, 1)
 			}, frameDelay);
 		} 
 	}

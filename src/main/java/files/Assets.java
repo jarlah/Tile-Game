@@ -14,7 +14,7 @@ public class Assets {
     }
     
     private final Sprite terrainSheet = new Sprite("SpriteSheets/terrain.png");
-    private final Sprite playerSheet = new Sprite("Textures/Hero.png");
+    private final Sprite playerSheet = new Sprite("SpriteSheets/player.png");
     
     private Assets() {}
 }
