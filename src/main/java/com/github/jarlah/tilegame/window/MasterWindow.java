@@ -9,9 +9,9 @@ public class MasterWindow {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         MasterCanvas masterCanvas = MasterCanvas.get();
-        masterCanvas.startLoop();
         frame.add(masterCanvas.getCanvas());
         frame.pack();
         frame.setLocationRelativeTo(null);
+        masterCanvas.startLoop();
     }
 }
