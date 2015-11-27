@@ -8,15 +8,15 @@ import com.github.jarlah.tilegame.animation.Animation;
 public class Tile {
 	public static final int FRAME_DELAY = 10;
 	public static final int TILE_SIZE = 16;
-	
+
 	private Rectangle boundArea;
 	private Animation animation;
 	private final int x, y, size;
-	
+
 	public Tile(TileInfo tileInfo, int size) {
 		this(tileInfo.getX(), tileInfo.getY(), size);
 	}
-	
+
 	public Tile(int x, int y, int size) {
 		this.x = x;
 		this.y = y;
@@ -28,7 +28,7 @@ public class Tile {
 		g.drawImage(animation.getSprite(), x, y, size, size, null);
 	}
 
-	public void tick(double delta) {
+	public void tick() {
 		// update animation
 	}
 

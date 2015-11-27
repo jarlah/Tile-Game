@@ -9,153 +9,180 @@ import com.github.jarlah.tilegame.entity.tiles.Enemy;
 import com.github.jarlah.tilegame.entity.tiles.Tile;
 import com.github.jarlah.tilegame.files.Assets;
 import com.github.jarlah.tilegame.game.Castle;
+import com.github.jarlah.tilegame.maths.Vector2f;
 import com.github.jarlah.tilegame.screen.ScreenHandler;
 
 public class Player extends GameActor {
-	private static final int FRAME_DELAY = 10;
-	
+	private static final int FRAME_DELAY = 4;
+	private boolean goingRight = false, goingLeft = false, goingUp = false,
+			goingDown = false;
 	private Animation walkLeftAn = new LeftAnimation(FRAME_DELAY);
 	private Animation walkRightAn = new RightAnimation(FRAME_DELAY);
 	private Animation standingAn = new StandingAnimation(FRAME_DELAY);
 	private Animation walkUpAn = new UpAnimation(FRAME_DELAY);
 	private Animation walkDownAn = new DownAnimation(FRAME_DELAY);
-	
-	class UpAnimation extends Animation{
+
+	class UpAnimation extends Animation {
 		public UpAnimation(int frameDelay) {
-			super(new BufferedImage[]{
-				Assets.get().getPlayerSheet().loadSprite("playerUpWalk1", 0, 0),
-				Assets.get().getPlayerSheet().loadSprite("playerUpWalk2", 1, 0),
-				Assets.get().getPlayerSheet().loadSprite("playerUpWalk3", 2, 0), 
-				Assets.get().getPlayerSheet().loadSprite("playerUpWalk4", 3, 0)
-			}, frameDelay);
-		} 
+			super(new BufferedImage[] {
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerUpWalk1", 0, 0),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerUpWalk2", 1, 0),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerUpWalk3", 2, 0),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerUpWalk4", 3, 0) }, frameDelay);
+		}
 	}
-	
-	class DownAnimation extends Animation{
+
+	class DownAnimation extends Animation {
 		public DownAnimation(int frameDelay) {
-			super(new BufferedImage[]{
-			    Assets.get().getPlayerSheet().loadSprite("playerDownWalk1", 4, 0), 
-				Assets.get().getPlayerSheet().loadSprite("playerDownWalk1", 5, 0), 
-				Assets.get().getPlayerSheet().loadSprite("playerDownWalk2", 6, 0),
-				Assets.get().getPlayerSheet().loadSprite("playerDownWalk2", 7, 0)
-			}, frameDelay);
-		} 
+			super(new BufferedImage[] {
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerDownWalk1", 4, 0),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerDownWalk1", 5, 0),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerDownWalk2", 6, 0),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerDownWalk2", 7, 0) }, frameDelay);
+		}
 	}
-	
-	class LeftAnimation extends Animation{
+
+	class LeftAnimation extends Animation {
 		public LeftAnimation(int frameDelay) {
-			super(new BufferedImage[]{
-				Assets.get().getPlayerSheet().loadSprite("playerLeftWalk1", 0, 1),
-				Assets.get().getPlayerSheet().loadSprite("playerLeftWalk2", 1, 1),
-				Assets.get().getPlayerSheet().loadSprite("playerLeftWalk3", 2, 1), 
-				Assets.get().getPlayerSheet().loadSprite("playerLeftWalk4", 3, 1)
-			}, frameDelay);
-		} 
+			super(new BufferedImage[] {
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerLeftWalk1", 0, 1),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerLeftWalk2", 1, 1),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerLeftWalk3", 2, 1),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerLeftWalk4", 3, 1) }, frameDelay);
+		}
 	}
-	
-	class RightAnimation extends Animation{
+
+	class RightAnimation extends Animation {
 		public RightAnimation(int frameDelay) {
-			super(new BufferedImage[]{
-				Assets.get().getPlayerSheet().loadSprite("playerRightWalk1", 7, 1), 
-				Assets.get().getPlayerSheet().loadSprite("playerRightWalk2", 6, 1), 
-				Assets.get().getPlayerSheet().loadSprite("playerRightWalk3", 5, 1), 
-				Assets.get().getPlayerSheet().loadSprite("playerRightWalk4", 4, 1)
-			}, frameDelay);
-		} 
+			super(new BufferedImage[] {
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerRightWalk1", 7, 1),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerRightWalk2", 6, 1),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerRightWalk3", 5, 1),
+					Assets.get().getPlayerSheet()
+							.loadSprite("playerRightWalk4", 4, 1) }, frameDelay);
+		}
 	}
-	
-	class StandingAnimation extends Animation{
+
+	class StandingAnimation extends Animation {
 		public StandingAnimation(int frameDelay) {
-			super(new BufferedImage[]{
-				Assets.get().getPlayerSheet().loadSprite("playerDownStill", 4, 0)
-			}, frameDelay);
-		} 
+			super(new BufferedImage[] { Assets.get().getPlayerSheet()
+					.loadSprite("playerDownStill", 4, 0) }, frameDelay);
+		}
 	}
-	
+
 	// This is the actual animation
 	private Animation animation;
-	
+
 	public Player(float x, float y) {
-		super(x, y, 30, 30);
-		animation = standingAn;
-		animation.start();
-		setAnimation(animation);
+		this(x, y, new Vector2f(0, 0));
 	}
-	
+
+	public Player(float x, float y, Vector2f velocity) {
+		super(x, y, 40, 40, velocity);
+		setAnimation(animation = standingAn);
+		animation.start();
+	}
+
 	private void startLeftAnimation() {
-		animation = walkLeftAn;
+		setAnimation(animation = walkLeftAn);
 		animation.start();
-		setAnimation(animation);
 	}
-	
+
 	private void startRightAnimation() {
-		animation = walkRightAn;
+		setAnimation(animation = walkRightAn);
 		animation.start();
-		setAnimation(animation);
 	}
-	
+
 	private void startUpAnimation() {
-		animation = walkUpAn;
+		setAnimation(animation = walkUpAn);
 		animation.start();
-		setAnimation(animation);
 	}
-	
+
 	private void startDownAnimation() {
-		animation = walkDownAn;
+		setAnimation(animation = walkDownAn);
 		animation.start();
-		setAnimation(animation);
 	}
-	
-	private void resetAnimation() {
-		animation.stop();
-		animation.reset();
-	}
-   
+
 	public void inputPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_A:
-			getVelocity().setX(-2f);
-			startLeftAnimation();
+			getVelocity().setX(-3f);
+			goingLeft = true;
 			break;
 		case KeyEvent.VK_D:
-			getVelocity().setX(2f);
-			startRightAnimation();
+			getVelocity().setX(3f);
+			goingRight = true;
 			break;
 		case KeyEvent.VK_W:
-			getVelocity().setY(-2f);
-			startUpAnimation();
+			getVelocity().setY(-3f);
+			goingUp = true;
 			break;
 		case KeyEvent.VK_S:
-			getVelocity().setY(2f);
-			startDownAnimation();
+			getVelocity().setY(3f);
+			goingDown = true;
 		}
+		startAnimation();
 	}
 
 	public void inputReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_A:
 			getVelocity().setX(0);
-			if (animation instanceof LeftAnimation) {
-				resetAnimation();
-			}
+			goingLeft = false;
 			break;
 		case KeyEvent.VK_D:
 			getVelocity().setX(0);
-			if (animation instanceof RightAnimation) {
-				resetAnimation();
-			}
+			goingRight = false;
 			break;
 		case KeyEvent.VK_W:
 			getVelocity().setY(0);
-			if (animation instanceof UpAnimation) {
-				resetAnimation();
-			}
+			goingUp = false;
 			break;
 		case KeyEvent.VK_S:
 			getVelocity().setY(0);
-			if (animation instanceof DownAnimation) {
-				resetAnimation();
-			}
+			goingDown = false;
+		}
+		startAnimation();
+	}
+
+	private void stopAnimation() {
+		animation.stop();
+		animation.reset();
+	}
+
+	private void startAnimation() {
+		boolean started = false;
+		if (goingRight) {
+			startRightAnimation();
+			started = true;
+		} else if (goingLeft) {
+			startLeftAnimation();
+			started = true;
+		}
+		if (goingUp) {
+			startUpAnimation();
+			started = true;
+		} else if (goingDown) {
+			startDownAnimation();
+			started = true;
+		}
+		if (!started) {
+			stopAnimation();
 		}
 	}
 
@@ -168,5 +195,18 @@ public class Player extends GameActor {
 		if (collisionX instanceof Enemy || collisionY instanceof Enemy) {
 			System.out.println("Whoaaa!! an ememy!!");
 		}
+	}
+
+	@Override
+	public void handleBorderCrossing() {
+		getVelocity().setX(0);
+		getVelocity().setY(0);
+		if (getOldX() != getX()) {
+			setX(getOldX());
+		}
+		if (getOldY() != getY()) {
+			setY(getOldY());
+		}
+		stopAnimation();
 	}
 }

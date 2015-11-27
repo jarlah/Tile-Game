@@ -19,23 +19,29 @@ public class Level {
 	private final int tileSize = 50;
 	private final int minTilesX = 16 + 3;
 	private final int minTilesY = 12 + 3;
-	
 	private int lengthX, lengthY;
+	private TileCreator tileCallback;
 
-	public Level(String link) {
+	public Level(String link, TileCreator levelTileCallback) {
+		this.tileCallback = levelTileCallback;
 		List<TileRow> rows = loadTileRows(link);
 		lengthX = rows.get(0).tiles.size();
 		if (lengthX < minTilesX) {
-			throw new IllegalArgumentException("in level " + link + " -> length x " + lengthX + " is smaller than minimum length x " + minTilesX);
+			throw new IllegalArgumentException("in level " + link
+					+ " -> length x " + lengthX
+					+ " is smaller than minimum length x " + minTilesX);
 		}
 		lengthY = rows.size();
 		if (lengthY < minTilesY) {
-			throw new IllegalArgumentException("in level " + link + " -> length y " + lengthY + " is smaller than minimum length y " + minTilesY);
+			throw new IllegalArgumentException("in level " + link
+					+ " -> length y " + lengthY
+					+ " is smaller than minimum length y " + minTilesY);
 		}
 		tiles = new MasterTile[lengthX][lengthY];
 		for (int x = 0; x < lengthX; x++) {
 			for (int y = 0; y < lengthY; y++) {
-				TileInfo tileInfo = new TileInfo(x * tileSize, y * tileSize, tileSize);
+				TileInfo tileInfo = new TileInfo(x * tileSize, y * tileSize,
+						tileSize);
 				Class<? extends Tile> tile = rows.get(y).tiles.get(x);
 				Tile top = null;
 				if (tile.isAssignableFrom(Tree.class)) {
@@ -50,15 +56,16 @@ public class Level {
 				tiles[x][y] = new MasterTile(new Grass(tileInfo), top, tileInfo);
 			}
 		}
-		
+
 	}
 
 	private List<TileRow> loadTileRows(String link) {
 		List<TileRow> rows = new ArrayList<>();
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new InputStreamReader(Level.class.getClassLoader().getResourceAsStream(link)));
-			while (br.ready()) { 
+			br = new BufferedReader(new InputStreamReader(Level.class
+					.getClassLoader().getResourceAsStream(link)));
+			while (br.ready()) {
 				rows.add(new TileRow(getTiles(br.readLine())));
 			}
 			br.close();
@@ -66,7 +73,8 @@ public class Level {
 			if (br != null) {
 				try {
 					br.close();
-				} catch (IOException e) {} // Ignore
+				} catch (IOException e) {
+				} // Ignore
 			}
 			throw new RuntimeException("Could not load level: " + link, ex);
 		}
@@ -75,28 +83,15 @@ public class Level {
 
 	private List<Class<? extends Tile>> getTiles(String line) {
 		List<Class<? extends Tile>> tiles = new ArrayList<>();
-		for (char c: line.toCharArray()) {
-			tiles.add(getTile(c));
+		for (char c : line.toCharArray()) {
+			tiles.add(tileCallback.createTile(c));
 		}
 		return tiles;
 	}
 
-	public Class<? extends Tile> getTile(int letter) {
-		char c = (char) letter;
-		switch (c) {
-		case 'C':
-			return Dungeon.class;
-		case 'T':
-			return Tree.class;
-		case 'E':
-			return Enemy.class;
-		default:
-			return Grass.class;
-		}
-	}
+	class TileRow {
+		List<Class<? extends Tile>> tiles;
 
-	class TileRow { 
-		List<Class<? extends Tile>> tiles; 
 		TileRow(List<Class<? extends Tile>> tiles) {
 			this.tiles = tiles;
 		}

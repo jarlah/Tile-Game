@@ -23,7 +23,8 @@ public class Castle extends Screen {
 		}
 	}
 
-	private Castle() {}
+	private Castle() {
+	}
 
 	public void render(Graphics g) {
 		g.setColor(Color.BLACK);
@@ -32,7 +33,7 @@ public class Castle extends Screen {
 		g.drawString("Not implemented yet", 300, 300);
 	}
 
-	public void tick(double delta) {
+	public void tick() {
 
 	}
 

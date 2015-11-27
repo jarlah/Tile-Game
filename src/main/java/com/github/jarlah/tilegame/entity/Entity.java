@@ -18,9 +18,9 @@ public abstract class Entity {
 	private float oldX, oldY;
 	private Rectangle boundArea;
 	private Animation animation;
-	
+
 	public Entity(float x, float y, float width, float height) {
-		this(x, y, width, height, new Vector2f());
+		this(x, y, width, height, new Vector2f(0, 0));
 	}
 
 	public Entity(float x, float y, float width, float height, Vector2f velocity) {
@@ -28,48 +28,55 @@ public abstract class Entity {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.boundArea = new Rectangle((int) x, (int) y, (int) width, (int) height);
+		this.boundArea = new Rectangle((int) x, (int) y, (int) width,
+				(int) height);
 		this.velocity = velocity;
 	}
 
-	public void tick(double delta) {
+	public void tick() {
 		oldX = x;
 		oldY = y;
-		updatePosition(delta);
+		updatePosition();
 		boolean collision = checkCollision();
 		if (collision) {
 			animation.stop();
 			animation.reset();
-		}else {
+		} else {
 			animation.update();
 		}
 	}
 
-	public void updatePosition(double delta) {
-		x += delta * velocity.getX();
-		y += delta * velocity.getY();
+	public void updatePosition() {
+		x += velocity.getX();
+		y += velocity.getY();
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(animation.getSprite(), (int) (x - Camera.get().getX()),
-				(int) (y - Camera.get().getY()), (int) width, (int) height, null);
+		final int xPosition = (int) ((x - Camera.get().getX()));
+		final int yPosition = (int) ((y - Camera.get().getY()));
+		g.drawImage(animation.getSprite(), xPosition, yPosition, (int) width, (int) height, null);
 	}
 
 	public boolean checkCollision() {
 		Tile collisionX = null;
 		Tile collisionY = null;
-		
+
 		int cellX = (int) (x / 50);
 		int cellY = (int) (y / 50);
 
 		final Level level = ScreenHandler.get().getActiveScreen().getLevel();
-		
+
 		if (level == null) {
 			return false;
 		}
-		
-		if (cellX < 0 || cellY < 0 || cellX >= level.getLengthX() - 1 || cellY > level.getLengthY() - 1)
+
+		if (cellX < 0 
+			|| cellY < 0 
+			|| cellX >= level.getLengthX() - 1
+			|| cellY > level.getLengthY() - 1) {
+			handleBorderCrossing();
 			return false;
+		}
 
 		// X
 		if (velocity.getX() < 0) {
@@ -80,7 +87,8 @@ public abstract class Entity {
 			collisionX = collisionX != null ? collisionX : isCollision(x, y + (height / 2));
 
 			// BOTTOM LEFT
-			collisionX = collisionX != null ? collisionX : isCollision(x + 5, y);
+			collisionX = collisionX != null ? collisionX
+					: isCollision(x + 5, y);
 
 		} else if (velocity.getX() > 0) {
 			// TOP RIGHT
@@ -124,7 +132,7 @@ public abstract class Entity {
 			velocity.setY(0);
 			y = oldY;
 		}
-		
+
 		handleCollision(collisionX, collisionY);
 
 		return collisionX != null || collisionY != null;
@@ -132,8 +140,12 @@ public abstract class Entity {
 
 	public abstract void handleCollision(Tile collisionX, Tile collisionY);
 
+	public abstract void handleBorderCrossing();
+
 	public Tile isCollision(float x, float y) {
-		MasterTile tile = ScreenHandler.get().getActiveScreen().getTile((int) (x / 50), (int) (y / 50));
+		final int xTile = (int) (x / 50);
+		final int yTile = (int) (y / 50);
+		MasterTile tile = ScreenHandler.get().getActiveScreen().getTile(xTile, yTile);
 		return tile != null ? tile.getTop() : null;
 	}
 

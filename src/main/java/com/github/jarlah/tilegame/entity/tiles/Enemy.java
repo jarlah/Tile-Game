@@ -7,15 +7,14 @@ import com.github.jarlah.tilegame.files.Assets;
 
 public class Enemy extends Tile {
 	private final Animation standingAn = new StandingAnimation(FRAME_DELAY);
-	
-	class StandingAnimation extends Animation{
+
+	class StandingAnimation extends Animation {
 		public StandingAnimation(int frameDelay) {
-			super(new BufferedImage[]{
-				Assets.get().getEnemySheet().loadSprite("enemyDownStill", 0, 0)
-			}, frameDelay);
-		} 
+			super(new BufferedImage[] { Assets.get().getEnemySheet()
+					.loadSprite("enemyDownStill", 0, 0) }, frameDelay);
+		}
 	}
-	
+
 	// This is the actual animation
 	private final Animation animation = standingAn;
 

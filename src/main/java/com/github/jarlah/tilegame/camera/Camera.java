@@ -4,17 +4,18 @@ import com.github.jarlah.tilegame.entity.Entity;
 import com.github.jarlah.tilegame.window.MasterCanvas;
 
 public class Camera {
-    public static Camera get() { 
-        return Creator.object;
-    }
+	public static Camera get() {
+		return Creator.object;
+	}
 
-    private static class Creator {
-        private static final Camera object = new Camera();
-    }
+	private static class Creator {
+		private static final Camera object = new Camera();
+	}
 
 	private int x, y;
 
-	private Camera() {}
+	private Camera() {
+	}
 
 	public void setPosition(Entity e) {
 		x = (int) e.getX() - MasterCanvas.WIDTH / 2;
