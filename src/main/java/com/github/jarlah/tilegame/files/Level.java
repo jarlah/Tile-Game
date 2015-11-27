@@ -3,7 +3,6 @@ package com.github.jarlah.tilegame.files;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,22 +55,33 @@ public class Level {
 
 	private List<TileRow> loadTileRows(String link) {
 		List<TileRow> rows = new ArrayList<>();
+		BufferedReader br = null;
 		try {
-			Reader r = new InputStreamReader(Level.class.getClassLoader().getResourceAsStream(link));
-			BufferedReader br = new BufferedReader(r);
-			while (br.ready()) {
-				List<Class<? extends Tile>> tiles = new ArrayList<>();
-				br.readLine().chars().mapToObj(Level::getTile).forEach((tile) -> tiles.add(tile));
-				rows.add(new TileRow(tiles));
+			br = new BufferedReader(new InputStreamReader(Level.class.getClassLoader().getResourceAsStream(link)));
+			while (br.ready()) { 
+				rows.add(new TileRow(getTiles(br.readLine())));
 			}
 			br.close();
 		} catch (IOException ex) {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {} // Ignore
+			}
 			throw new RuntimeException("Could not load level: " + link, ex);
 		}
 		return rows;
 	}
 
-	public static Class<? extends Tile> getTile(int letter) {
+	private List<Class<? extends Tile>> getTiles(String line) {
+		List<Class<? extends Tile>> tiles = new ArrayList<>();
+		for (char c: line.toCharArray()) {
+			tiles.add(getTile(c));
+		}
+		return tiles;
+	}
+
+	public Class<? extends Tile> getTile(int letter) {
 		char c = (char) letter;
 		switch (c) {
 		case 'C':

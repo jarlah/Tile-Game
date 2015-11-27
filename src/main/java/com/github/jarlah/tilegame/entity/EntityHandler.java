@@ -33,10 +33,14 @@ public class EntityHandler {
     }
     
     public void render(Graphics g) {
-        entities.stream().forEach((e) -> e.render(g));
+    	for(Entity e: entities) {
+    		 e.render(g);
+    	}
     }
     
     public void tick(double delta) {
-        entities.stream().forEach((e) -> e.tick(delta));
+    	for(Entity e: entities) {
+	   		 e.tick(delta);
+	   	}
     }
 }
