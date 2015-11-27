@@ -44,7 +44,6 @@ public class MasterCanvas extends Canvas implements Runnable {
         this.addMouseMotionListener(mouseListener);
         this.addMouseWheelListener(mouseListener);
         this.setFocusable(true);
-        this.requestFocus();
     }
     
     public void addNotify() {
